@@ -1,0 +1,4 @@
+name: frb_plugins
+
+packages:
+  - packages/**
