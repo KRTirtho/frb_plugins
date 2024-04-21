@@ -12,6 +12,10 @@ class LinuxBuildCommand extends Command with BuildConfig {
   @override
   String get description => "Build the linux libraries";
 
+  LinuxBuildCommand() {
+    argParser.addOption("project", abbr: "p", mandatory: true);
+  }
+
   @override
   FutureOr? run() async {
     final project = argResults?.option("project");

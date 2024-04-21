@@ -13,6 +13,10 @@ class AndroidBuildCommand extends Command with BuildConfig {
   @override
   String get description => "Build the Android libraries";
 
+  AndroidBuildCommand() {
+    argParser.addOption("project", abbr: "p", mandatory: true);
+  }
+
   @override
   FutureOr? run() async {
     final project = argResults?.option("project");

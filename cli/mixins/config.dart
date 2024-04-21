@@ -9,9 +9,13 @@ mixin BuildConfig on Command {
   final String cwd = Directory.current.path;
 
   Future<void> ensureBuildDirectoryExists(String project) async {
-    _buildDir = join(cwd, _buildDir, name, project);
-    Directory(join(cwd, _buildDir))
-      ..delete(recursive: true)
-      ..create(recursive: true);
+    _buildDir = join(cwd, _buildDir, project, name);
+    final buildDirectory = Directory(join(cwd, _buildDir));
+
+    if (await buildDirectory.exists()) {
+      await buildDirectory.delete(recursive: true);
+    } else {
+      await buildDirectory.create(recursive: true);
+    }
   }
 }

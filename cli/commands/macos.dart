@@ -12,6 +12,10 @@ class MacOSBuildCommand extends Command with BuildConfig {
   @override
   String get description => "Build the macos libraries";
 
+  MacOSBuildCommand() {
+    argParser.addOption("project", abbr: "p", mandatory: true);
+  }
+
   @override
   FutureOr? run() async {
     final project = argResults?.option("project");

@@ -12,6 +12,10 @@ class IOSBuildCommand extends Command with BuildConfig {
   @override
   String get description => "Build the iOS libraries";
 
+  IOSBuildCommand() {
+    argParser.addOption("project", abbr: "p", mandatory: true);
+  }
+
   @override
   FutureOr? run() async {
     final project = argResults?.option("project");

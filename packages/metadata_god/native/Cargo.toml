@@ -1,0 +1,15 @@
+[package]
+name = "metadata_god"
+version = "0.5.2"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib", "cdylib"]
+
+[build-dependencies]
+flutter_rust_bridge_codegen = "1.82.*"
+
+[dependencies]
+flutter_rust_bridge = "1.82.*"
+anyhow = "1"
+lofty = "0.18.*"

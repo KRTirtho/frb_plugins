@@ -2,3 +2,8 @@ name: frb_plugins
 
 packages:
   - packages/**
+
+scripts:
+  new:
+    exec: cd packages && mason make frb_library
+    description: Create a new Flutter Rust Bridge library
