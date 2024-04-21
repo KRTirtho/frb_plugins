@@ -28,28 +28,30 @@ class WindowsBuildCommand extends Command with BuildConfig {
     }
     await ensureBuildDirectoryExists(project!);
 
-    final shell = Shell(workingDirectory: buildDir);
+    final shell = Shell(
+      workingDirectory: buildDir,
+    );
 
     await shell.run("cargo install cargo-xwin");
 
     final libname = "$project.dll";
 
     final targets = [
+      ("x86_64-pc-windows-msvc", "windows-x64"),
       ("aarch64-pc-windows-msvc", "windows-arm64"),
-      ("x86_64-pc-windows-msvc", "windows-x64")
     ];
     for (final (target, arch) in targets) {
       final archDir = Directory(join(buildDir, arch))..create(recursive: true);
       await shell.run("""
         rustup target add $target
-        cargo xwin build --target=$target -r --manifest=${join(projectDir, "Cargo.toml")}
+        cargo xwin build --target=$target -r --manifest-path ${join(projectDir, "Cargo.toml")}
         cp ${join(projectDir, "target", target, "release", libname)} ${archDir.path}
       """);
     }
 
     await shell.run("""
-      tar -czvf windows.tar.gz windows-*
-      rm -rf windows-*
+      tar -czvf windows.tar.gz windows-x64 windows-arm64
+      rm -rf windows-x64 windows-arm64
     """);
   }
 }

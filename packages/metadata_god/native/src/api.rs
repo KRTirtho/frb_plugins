@@ -53,7 +53,10 @@ pub fn read_metadata(file: String) -> Result<Metadata> {
         genre: tag.genre().and_then(|s| Some(s.to_string())),
         picture: (match cover {
             Some(cover) => Some(Picture {
-                mime_type: cover.mime_type().to_string(),
+                mime_type: match cover.mime_type() {
+                  Some(mime_type) => mime_type.to_string(),
+                  None => "image/jpeg".to_string(),
+                },
                 data: cover.data().to_vec(),
             }),
             None => None,
@@ -102,7 +105,7 @@ pub fn write_metadata(file: String, metadata: Metadata) -> Result<()> {
         let image = metadata.picture.unwrap();
         tag.push_picture(lofty::Picture::new_unchecked(
             PictureType::CoverFront,
-            MimeType::from_str(&image.mime_type),
+            Some(MimeType::from_str(&image.mime_type)),
             None,
             image.data,
         ));

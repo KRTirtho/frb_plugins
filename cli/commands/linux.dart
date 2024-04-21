@@ -32,6 +32,15 @@ class LinuxBuildCommand extends Command with BuildConfig {
 
     await shell.run("cargo install cargo-zigbuild");
 
+    final zigPath = await which("zig");
+
+    if (zigPath == null) {
+      stderr.writeln(
+        "Zig not found in PATH. Install Zig in order to build $project for linux",
+      );
+      return;
+    }
+
     final libname = "lib$project.so";
 
     final targets = [
@@ -42,14 +51,14 @@ class LinuxBuildCommand extends Command with BuildConfig {
       final archDir = Directory(join(buildDir, arch))..create(recursive: true);
       await shell.run("""
         rustup target add $target
-        cargo zigbuild --target=$target -r --manifest=${join(projectDir, "Cargo.toml")}
+        cargo zigbuild --target=$target -r --manifest-path ${join(projectDir, "Cargo.toml")}
         cp ${join(projectDir, "target", target, "release", libname)} ${archDir.path}
       """);
     }
 
     await shell.run("""
-      tar -czvf linux.tar.gz linux-*
-      rm -rf linux-*
+      tar -czvf linux.tar.gz linux-x64 linux-arm64
+      rm -rf linux-x64 linux-arm64
     """);
   }
 }

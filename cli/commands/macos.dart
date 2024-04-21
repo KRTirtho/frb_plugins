@@ -33,12 +33,12 @@ class MacOSBuildCommand extends Command with BuildConfig {
     await shell.run("rustup target add ${arch.join(" ")}");
     for (final target in arch) {
       await shell.run(
-        "cargo build -r --target=$target --manifest=${join(projectDir, "Cargo.toml")}",
+        "cargo build -r --target=$target --manifest-path ${join(projectDir, "Cargo.toml")}",
       );
     }
 
     final framework = "$project-$name.xcframework";
-    final libname = "$project.a";
+    final libname = "lib$project.a";
     final macosSimLipo = join(buildDir, "macos-sim-lipo", libname);
 
     await Directory(join(buildDir, "macos-sim-lipo")).create(recursive: true);

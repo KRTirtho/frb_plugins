@@ -14,8 +14,7 @@ mixin BuildConfig on Command {
 
     if (await buildDirectory.exists()) {
       await buildDirectory.delete(recursive: true);
-    } else {
-      await buildDirectory.create(recursive: true);
     }
+    await buildDirectory.create(recursive: true);
   }
 }
