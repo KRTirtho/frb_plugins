@@ -11,3 +11,4 @@ dependencies:
   path: ^1.9.0
   process_run: ^0.14.2
   pub_semver: ^2.1.4
+  pubspec: ^2.3.0

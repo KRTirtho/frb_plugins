@@ -1,9 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:path/path.dart';
-// ignore: depend_on_referenced_packages
 import 'package:pub_semver/pub_semver.dart';
+import 'package:pubspec/pubspec.dart';
 
 class VersionCommand extends Command {
   @override
@@ -19,6 +21,12 @@ class VersionCommand extends Command {
       help: 'The project to update the version.',
       valueHelp: 'project_name',
       mandatory: true,
+    );
+
+    argParser.addFlag(
+      'pubspec',
+      help: 'Update the version from the pubspec.yaml file.',
+      defaultsTo: false,
     );
   }
 
@@ -40,12 +48,28 @@ class VersionCommand extends Command {
       return;
     }
 
-    if (argResults == null || argResults!.arguments.isEmpty) {
+    final isPubspec = argResults?.flag("pubspec") == true;
+
+    if (argResults == null || (!isPubspec && argResults!.arguments.isEmpty)) {
       stderr.writeln("Please provide a new <version>");
       return;
     }
 
-    final newVersion = await Future.microtask(() {
+    final newVersion = await Future.microtask(() async {
+      if (isPubspec) {
+        final pubspecFile = File(join(projectDir, "pubspec.yaml"));
+
+        if (!await pubspecFile.exists()) {
+          stderr.writeln("pubspec.yaml not found");
+          exit(1);
+        }
+
+        final pubspecContent = await pubspecFile.readAsString();
+        final pubspec = PubSpec.fromYamlString(pubspecContent);
+
+        return pubspec.version!;
+      }
+
       return Version.parse(argResults!.arguments.first);
     }).catchError((e) {
       stderr.writeln("Invalid version format");

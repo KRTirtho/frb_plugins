@@ -234,7 +234,7 @@ packages:
     source: hosted
     version: "0.4.0"
   pubspec:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pubspec
       sha256: f534a50a2b4d48dc3bc0ec147c8bd7c304280fff23b153f3f11803c4d49d927e
