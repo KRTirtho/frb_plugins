@@ -1,4 +1,4 @@
-set(LibraryVersion "v0.1.2") # generated; do not edit
+set(LibraryVersion "smtc_windows-v0.1.2") # generated; do not edit
 
 # The Flutter tooling requires that developers have a version of Visual Studio
 # installed that includes CMake 3.14 or later. You should not increase this
@@ -15,7 +15,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
 set(ArchivePath "${LibRoot}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
-    "https://github.com/KRTirtho/frb_plugins/releases/download/${PROJECT_NAME}-${LibraryVersion}/windows.tar.gz"
+    "https://github.com/KRTirtho/frb_plugins/releases/download/${LibraryVersion}/windows.tar.gz"
     ${ArchivePath}
     TLS_VERIFY ON
   )

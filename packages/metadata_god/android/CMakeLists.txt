@@ -1,4 +1,4 @@
-set(LibraryVersion "v0.5.2") # generated; do not edit
+set(LibraryVersion "metadata_god-v0.5.2") # generated; do not edit
 
 # Unlike the Windows & Linux CMakeLists.txt, this Android equivalent is just here
 # to download the Android binaries into src/main/jniLibs/ and does not build anything.
@@ -15,7 +15,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs")
 set(ArchivePath "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
-    "https://github.com/KRTirtho/frb_plugins/releases/download/metadata_god-${LibraryVersion}/android.tar.gz"
+    "https://github.com/KRTirtho/frb_plugins/releases/download/${LibraryVersion}/android.tar.gz"
     ${ArchivePath}
     TLS_VERIFY ON
   )
