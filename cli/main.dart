@@ -4,6 +4,7 @@ import 'commands/android.dart';
 import 'commands/ios.dart';
 import 'commands/linux.dart';
 import 'commands/macos.dart';
+import 'commands/version.dart';
 import 'commands/windows.dart';
 
 void main(List<String> args) {
@@ -15,5 +16,6 @@ void main(List<String> args) {
     ..addCommand(MacOSBuildCommand())
     ..addCommand(WindowsBuildCommand())
     ..addCommand(LinuxBuildCommand())
+    ..addCommand(VersionCommand())
     ..run(args);
 }

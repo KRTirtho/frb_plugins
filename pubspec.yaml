@@ -10,3 +10,4 @@ dependencies:
   args: ^2.5.0
   path: ^1.9.0
   process_run: ^0.14.2
+  pub_semver: ^2.1.4
