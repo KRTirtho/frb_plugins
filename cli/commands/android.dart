@@ -34,17 +34,20 @@ class AndroidBuildCommand extends Command with BuildConfig {
 
     await ensureBuildDirectoryExists(project);
 
-    final shell = Shell(workingDirectory: buildDir);
+    final shell = Shell(workingDirectory: join(projectDir, "native"));
 
     await shell.run("""
       cargo install cargo-ndk
       rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android i686-linux-android
     """);
 
-    final jniDir = join(cwd, "jniLibs");
+    final jniDir = Directory(join(buildDir, "jniLibs"));
+
+    await jniDir.create(recursive: true);
+
     await shell.run("""
-      cargo ndk -o ${shellArgument(jniDir)} \\
-        --manifest-path ${shellArgument(join(projectDir, "Cargo.toml"))} \\
+      cargo ndk -o ${jniDir.path} \\
+        --manifest-path ${join(projectDir, "Cargo.toml")} \\
         -t armeabi-v7a \\
         -t arm64-v8a \\
         -t x86 \\
@@ -52,8 +55,10 @@ class AndroidBuildCommand extends Command with BuildConfig {
         build --release 
     """);
 
-    await shell.cd(jniDir).run("tar -czvf ../android.tar.gz *");
+    await shell
+        .cd(jniDir.path)
+        .run("tar -czvf ../android.tar.gz armeabi-v7a arm64-v8a x86 x86_64");
 
-    await Directory(jniDir).delete(recursive: true);
+    await jniDir.delete(recursive: true);
   }
 }

@@ -2,7 +2,7 @@ release_tag_name = 'metadata_god-v0.5.2' # generated; do not edit
 
 # We cannot distribute the XCFramework alongside the library directly,
 # so we have to fetch the correct version here.
-framework_name = 'MetadataGod.xcframework'
+framework_name = 'metadata_god-ios.xcframework'
 remote_zip_name = "#{framework_name}.zip"
 url = "https://github.com/KRTirtho/frb_plugins/releases/download/#{release_tag_name}/#{remote_zip_name}"
 local_zip_name = "#{release_tag_name}.zip"

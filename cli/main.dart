@@ -4,6 +4,7 @@ import 'commands/android.dart';
 import 'commands/ios.dart';
 import 'commands/linux.dart';
 import 'commands/macos.dart';
+import 'commands/project_name.dart';
 import 'commands/version.dart';
 import 'commands/windows.dart';
 
@@ -17,5 +18,6 @@ void main(List<String> args) {
     ..addCommand(WindowsBuildCommand())
     ..addCommand(LinuxBuildCommand())
     ..addCommand(VersionCommand())
+    ..addCommand(ProjectNameExtractCommand())
     ..run(args);
 }

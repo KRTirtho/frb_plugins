@@ -41,7 +41,7 @@ jobs:
       - name: Extract project name
         id: extract
         run: |
-          PROJECT_NAME=$(echo ${{ github.ref_name }} | rev | cut -d '-' -f 2- | rev)
+          PROJECT_NAME=$(dart cli/main.dart project_name ${{ github.ref_name }})
           echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
         shell: bash
       
