@@ -11,9 +11,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - ubuntu-latest
           - windows-latest
-          - macos-latest
           - macos-latest
         platforms:
           - linux
@@ -21,6 +19,17 @@ jobs:
           - windows
           - ios
           - macos
+        include:
+          - os: ubuntu-latest
+            platforms: linux
+          - os: ubuntu-latest
+            platforms: android
+          - os: windows-latest
+            platforms: windows
+          - os: macos-latest
+            platforms: ios
+          - os: macos-latest
+            platforms: macos
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
