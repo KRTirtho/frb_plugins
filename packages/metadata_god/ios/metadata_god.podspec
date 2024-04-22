@@ -4,7 +4,7 @@ release_tag_name = 'v0.5.2' # generated; do not edit
 # so we have to fetch the correct version here.
 framework_name = 'MetadataGod.xcframework'
 remote_zip_name = "#{framework_name}.zip"
-url = "https://github.com/KRTirtho/metadata_god/releases/download/#{release_tag_name}/#{remote_zip_name}"
+url = "https://github.com/KRTirtho/frb_plugins/releases/download/metadata_god-#{release_tag_name}/#{remote_zip_name}"
 local_zip_name = "#{release_tag_name}.zip"
 `
 cd Frameworks
@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
   spec.name          = 'metadata_god'
   spec.version       = '0.0.1'
   spec.license       = { :file => '../LICENSE' }
-  spec.homepage      = 'https://github.com/KRTirtho/metadata_god'
+  spec.homepage      = 'https://github.com/KRTirtho/frb_plugins/tree/main/packages/metadata_god'
   spec.authors       = { 'K R Tirtho' => 'krtirtho@gmail.com' }
   spec.summary       = 'iOS/macOS Flutter bindings for metadata_god'
 

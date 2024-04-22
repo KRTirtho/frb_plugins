@@ -1,10 +1,10 @@
-release_tag_name = '{{name.snakeCase()}}-v0.0.0' # generated; do not edit
+release_tag_name = 'v0.0.0' # generated; do not edit
 
 # We cannot distribute the XCFramework alongside the library directly,
 # so we have to fetch the correct version here.
 framework_name = '{{name.pascalCase()}}-ios.xcframework'
 remote_zip_name = "#{framework_name}.zip"
-url = "https://github.com/{{github_user}}/{{repo_name}}/releases/download/#{release_tag_name}/#{remote_zip_name}"
+url = "https://github.com/{{github_user}}/{{repo_name}}/releases/download/{{name.snakeCase()}}-#{release_tag_name}/#{remote_zip_name}"
 local_zip_name = "#{release_tag_name}.zip"
 `
 cd Frameworks
