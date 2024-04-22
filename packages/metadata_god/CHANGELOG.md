@@ -1,3 +1,7 @@
+## 0.5.3
+
+ - **FEAT**(metadata_god): upgrade lofty and uuid packages.
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
