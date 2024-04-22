@@ -37,7 +37,9 @@ class WindowsBuildCommand extends Command with BuildConfig {
       workingDirectory: buildDir,
     );
 
-    await shell.run("cargo install cargo-xwin");
+    if (!Platform.isWindows) {
+      await shell.run("cargo install cargo-xwin");
+    }
 
     final libname = "$project.dll";
 
@@ -49,7 +51,7 @@ class WindowsBuildCommand extends Command with BuildConfig {
       final archDir = Directory(join(buildDir, arch))..create(recursive: true);
       await shell.run("""
         rustup target add $target
-        cargo xwin build --target=$target -r --manifest-path ${join(projectDir, "Cargo.toml")}
+        cargo ${Platform.isWindows ? "" : "xwin"} build --target=$target -r --manifest-path ${join(projectDir, "Cargo.toml")}
         cp ${join(projectDir, "target", target, "release", libname)} ${archDir.path}
       """);
     }
