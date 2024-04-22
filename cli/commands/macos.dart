@@ -26,7 +26,11 @@ class MacOSBuildCommand extends Command with BuildConfig {
       stderr.writeln("Project $project not found");
       return;
     }
-    await ensureBuildDirectoryExists(project!);
+    if (!await platformDirExists(project!)) {
+      stdout.writeln("Platform $name is not enabled for $project");
+      return;
+    }
+    await ensureBuildDirectoryExists(project);
 
     final shell = Shell(workingDirectory: buildDir);
     final arch = ["x86_64-apple-darwin", "aarch64-apple-darwin"];

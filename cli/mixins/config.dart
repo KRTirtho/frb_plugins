@@ -17,4 +17,11 @@ mixin BuildConfig on Command {
     }
     await buildDirectory.create(recursive: true);
   }
+
+  Future<bool> platformDirExists(String project) async {
+    final projectDir = join(cwd, "packages", project);
+    final platformDir = join(projectDir, name);
+
+    return await Directory(platformDir).exists();
+  }
 }

@@ -1,0 +1,51 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  publish_github_release:
+    # macOS because we can cross-compile to all other platforms from it
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: bluefireteam/melos-action@v2
+      - uses: goto-bus-stop/setup-zig@v2
+      - uses: KyleMayes/install-llvm-action@v1
+        with:
+          version: "15"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r25b
+
+      - name: Extract project name
+        id: extract
+        run: |
+          PROJECT_NAME=$(echo ${{ github.ref_name }} | rev | cut -d '-' -f 2- | rev)
+          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
+
+      - name: Build all library binaries
+        run: |
+          dart cli/main.dart android -p=${{ env.PROJECT_NAME }}
+          dart cli/main.dart ios -p=${{ env.PROJECT_NAME }}
+          dart cli/main.dart macos -p=${{ env.PROJECT_NAME }}
+          dart cli/main.dart windows -p=${{ env.PROJECT_NAME }}
+          dart cli/main.dart linux -p=${{ env.PROJECT_NAME }}
+
+      # - name: Create GitHub release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: platform-build/${{ env.PROJECT_NAME }}/**/*
+
+      - name: Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Libraries
+          path: platform-build/

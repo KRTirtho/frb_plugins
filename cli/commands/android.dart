@@ -27,8 +27,12 @@ class AndroidBuildCommand extends Command with BuildConfig {
       stderr.writeln("Project $project not found");
       return;
     }
+    if (!await platformDirExists(project!)) {
+      stdout.writeln("Platform $name is not enabled for $project");
+      return;
+    }
 
-    await ensureBuildDirectoryExists(project!);
+    await ensureBuildDirectoryExists(project);
 
     final shell = Shell(workingDirectory: buildDir);
 
