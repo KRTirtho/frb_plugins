@@ -9,16 +9,6 @@ jobs:
   build_libraries:
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
-        platforms:
-          - linux
-          - android
-          - windows
-          - ios
-          - macos
         include:
           - os: ubuntu-latest
             platforms: linux
