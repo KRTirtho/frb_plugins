@@ -6,15 +6,28 @@ on:
       - "*"
 
 jobs:
-  publish_github_release:
-    # macOS because we can cross-compile to all other platforms from it
-    runs-on: macos-latest
-
+  matrix_way:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+          - macos-latest
+        platforms:
+          - linux
+          - android
+          - windows
+          - ios
+          - macos
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
       - uses: bluefireteam/melos-action@v2
       - uses: goto-bus-stop/setup-zig@v2
+        if: ${{ matrix.platforms == 'linux' }}
       - uses: KyleMayes/install-llvm-action@v1
         with:
           version: "15"
@@ -22,6 +35,7 @@ jobs:
         with:
           toolchain: stable
       - uses: nttld/setup-ndk@v1
+        if: ${{ matrix.platforms == 'android' }}
         with:
           ndk-version: r25b
 
@@ -30,22 +44,28 @@ jobs:
         run: |
           PROJECT_NAME=$(echo ${{ github.ref_name }} | rev | cut -d '-' -f 2- | rev)
           echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
-
+        shell: bash
+      
       - name: Build all library binaries
         run: |
-          dart cli/main.dart android -p=${{ env.PROJECT_NAME }}
-          dart cli/main.dart ios -p=${{ env.PROJECT_NAME }}
-          dart cli/main.dart macos -p=${{ env.PROJECT_NAME }}
-          dart cli/main.dart windows -p=${{ env.PROJECT_NAME }}
-          dart cli/main.dart linux -p=${{ env.PROJECT_NAME }}
-
-      # - name: Create GitHub release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: platform-build/${{ env.PROJECT_NAME }}/**/*
+          dart cli/main.dart ${{ matrix.platforms }} -p ${{ env.PROJECT_NAME }}
+        shell: bash
 
       - name: Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Libraries
           path: platform-build/
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: Libraries
+          path: platform-build/
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: platform-build/**
