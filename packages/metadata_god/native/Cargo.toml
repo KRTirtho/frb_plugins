@@ -12,4 +12,4 @@ flutter_rust_bridge_codegen = "1.82.*"
 [dependencies]
 flutter_rust_bridge = "1.82.*"
 anyhow = "1"
-lofty = "0.18.*"
+lofty = "0.19.*"

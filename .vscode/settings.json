@@ -1,0 +1,6 @@
+{
+  "rust-analyzer.linkedProjects": [
+    "packages/metadata_god/Cargo.toml",
+    "packages/smtc_windows/Cargo.toml",
+  ]
+}

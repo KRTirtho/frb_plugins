@@ -5,5 +5,5 @@ packages:
 
 scripts:
   new:
-    exec: cd packages && mason make frb_library
+    exec: cd packages && mason make frb_library && echo "Add new project to .vscode/settings.json's rust-analyzer.linkedProjects to get Rust Analyzer support."
     description: Create a new Flutter Rust Bridge library

@@ -1,7 +1,10 @@
 use anyhow::{anyhow, Result};
 use lofty::{
-    Accessor, AudioFile, FileProperties, ItemKey, ItemValue, MimeType, PictureType, Tag, TagExt,
-    TagItem, TaggedFile, TaggedFileExt,
+    config::WriteOptions,
+    file::{AudioFile, TaggedFile, TaggedFileExt},
+    picture::{MimeType, PictureType},
+    properties::FileProperties,
+    tag::{Accessor, ItemKey, ItemValue, Tag, TagExt, TagItem},
 };
 
 #[derive(Debug)]
@@ -54,8 +57,8 @@ pub fn read_metadata(file: String) -> Result<Metadata> {
         picture: (match cover {
             Some(cover) => Some(Picture {
                 mime_type: match cover.mime_type() {
-                  Some(mime_type) => mime_type.to_string(),
-                  None => "image/jpeg".to_string(),
+                    Some(mime_type) => mime_type.to_string(),
+                    None => "image/jpeg".to_string(),
                 },
                 data: cover.data().to_vec(),
             }),
@@ -103,7 +106,7 @@ pub fn write_metadata(file: String, metadata: Metadata) -> Result<()> {
     }
     if metadata.picture.is_some() {
         let image = metadata.picture.unwrap();
-        tag.push_picture(lofty::Picture::new_unchecked(
+        tag.push_picture(lofty::picture::Picture::new_unchecked(
             PictureType::CoverFront,
             Some(MimeType::from_str(&image.mime_type)),
             None,
@@ -111,7 +114,7 @@ pub fn write_metadata(file: String, metadata: Metadata) -> Result<()> {
         ));
     }
 
-    tag.save_to_path(&file)?;
+    tag.save_to_path(&file, WriteOptions::default())?;
     Ok(())
 }
 
@@ -119,7 +122,7 @@ fn open_or_create_tag_for_file(file: &str) -> Result<(TaggedFile, Tag)> {
     let mut tagged_file = match lofty::read_from_path(file) {
         Ok(tagged_file) => tagged_file,
         _ => {
-            let prob = lofty::Probe::open(file)?;
+            let prob = lofty::probe::Probe::open(file)?;
 
             if prob.file_type().is_none() {
                 return Err(anyhow!("File type could not be determined"));
