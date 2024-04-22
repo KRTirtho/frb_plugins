@@ -49,9 +49,11 @@ class WindowsBuildCommand extends Command with BuildConfig {
       """);
     }
 
-    await shell.run("""
-      tar -czvf windows.tar.gz windows-x64 windows-arm64
-      rm -rf windows-x64 windows-arm64
-    """);
+    await shell.run("tar -czvf windows.tar.gz windows-x64 windows-arm64");
+
+    for (final (_, arch) in targets) {
+      final archDir = Directory(join(buildDir, arch));
+      await archDir.delete(recursive: true);
+    }
   }
 }

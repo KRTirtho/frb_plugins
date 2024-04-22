@@ -56,9 +56,11 @@ class LinuxBuildCommand extends Command with BuildConfig {
       """);
     }
 
-    await shell.run("""
-      tar -czvf linux.tar.gz linux-x64 linux-arm64
-      rm -rf linux-x64 linux-arm64
-    """);
+    await shell.run("tar -czvf linux.tar.gz linux-x64 linux-arm64");
+
+    for (final (_, arch) in targets) {
+      final archDir = Directory(join(buildDir, arch));
+      await archDir.delete(recursive: true);
+    }
   }
 }
