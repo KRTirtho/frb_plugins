@@ -1,24 +1,24 @@
 [package]
-name = "smtc_windows"
-version = "0.0.0"
-edition = "2021"
+name = 'smtc_windows'
+version = '0.1.3'
+edition = '2021'
 
 [lib]
-name = "smtc_windows"
-path = "src/lib.rs"
-crate-type = ["staticlib", "cdylib"]
+name = 'smtc_windows'
+path = 'src/lib.rs'
+crate-type = ['staticlib', 'cdylib']
 
 [[bin]]
-name = "smtc_windows_bin"
-path = "src/main.rs"
+name = 'smtc_windows_bin'
+path = 'src/main.rs'
 
 [build-dependencies]
-flutter_rust_bridge_codegen = "1.82.*"
+flutter_rust_bridge_codegen = '1.82.*'
 
 [dependencies]
-flutter_rust_bridge = "1.82.*"
-anyhow = "1.0.*"
+flutter_rust_bridge = '1.82.*'
+anyhow = '1.0.*'
 
 [dependencies.windows]
-version = "0.56.*"
-features = ["Media", "Media_Playback", "Foundation", "Storage_Streams"]
+version = '0.56.*'
+features = ['Media', 'Media_Playback', 'Foundation', 'Storage_Streams']

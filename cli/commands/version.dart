@@ -6,6 +6,7 @@ import 'package:args/command_runner.dart';
 import 'package:path/path.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec/pubspec.dart';
+import 'package:toml/toml.dart';
 
 class VersionCommand extends Command {
   @override
@@ -95,6 +96,19 @@ class VersionCommand extends Command {
           .replaceAll(versionRegEx, '$project-v$newVersion');
 
       await buildFile.writeAsString(content);
+    }
+
+    final cargoToml = File(join(projectDir, "native", "Cargo.toml"));
+
+    if (await cargoToml.exists()) {
+      final content =
+          TomlDocument.parse(await cargoToml.readAsString()).toMap();
+
+      content["package"]["version"] = newVersion.toString();
+
+      await cargoToml.writeAsString(
+        TomlDocument.fromMap(content).toString(),
+      );
     }
   }
 }

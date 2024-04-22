@@ -12,3 +12,4 @@ dependencies:
   process_run: ^0.14.2
   pub_semver: ^2.1.4
   pubspec: ^2.3.0
+  toml: ^0.15.0

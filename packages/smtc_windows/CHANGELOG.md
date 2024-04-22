@@ -1,9 +1,6 @@
 ## 0.1.3
 
- - **FIX**: prefix the tag name with project name while declaring tag var in build files.
  - **FIX**: asset download.
- - **FEAT**(metadata_god): upgrade lofty and uuid packages.
- - **FEAT**: add smtc_windows library.
 
 # Change Log
 
