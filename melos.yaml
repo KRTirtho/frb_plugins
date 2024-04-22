@@ -7,3 +7,6 @@ scripts:
   new:
     exec: cd packages && mason make frb_library && echo "Add new project to .vscode/settings.json's rust-analyzer.linkedProjects to get Rust Analyzer support."
     description: Create a new Flutter Rust Bridge library
+  version:
+    exec: echo "use 'dart cli/main.dart version <version> -p <package_name>' to update version"
+    description: You're not supposed to run this script directly. Use the command in the description.
