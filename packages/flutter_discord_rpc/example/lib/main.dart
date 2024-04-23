@@ -7,7 +7,9 @@ import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDiscordRPC.initialize(Platform.environment["DISCORD_APP_ID"]!);
+  await FlutterDiscordRPC.initialize(
+    Platform.environment['DISCORD_CLIENT_ID']!,
+  );
   runApp(const MyApp());
 }
 
@@ -24,13 +26,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    FlutterDiscordRPC.instance.connect();
     super.initState();
   }
 
   @override
+  void dispose() {
+    FlutterDiscordRPC.instance.disconnect();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 25);
-    const spacerSmall = SizedBox(height: 10);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -40,7 +47,35 @@ class _MyAppState extends State<MyApp> {
           child: Container(
             padding: const EdgeInsets.all(10),
             child: Column(
-              children: [],
+              children: [
+                TextButton(
+                  child: const Text("Set Activity"),
+                  onPressed: () {
+                    FlutterDiscordRPC.instance.setActivity(
+                      activity: RPCActivity(
+                        assets: const RPCAssets(
+                          largeText: "Hello Testing!!!",
+                          smallText: "Hello Testing!!!",
+                        ),
+                        buttons: [
+                          const RPCButton(
+                              label: "Google", url: "https://google.com"),
+                        ],
+                        details: "Very important details",
+                        state: "Very important state",
+                        timestamps: RPCTimestamps(
+                          start: DateTime.now().millisecondsSinceEpoch,
+                          end: DateTime.now().millisecondsSinceEpoch + 1000,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                TextButton(
+                  child: const Text("Clear Activity"),
+                  onPressed: () {},
+                ),
+              ],
             ),
           ),
         ),

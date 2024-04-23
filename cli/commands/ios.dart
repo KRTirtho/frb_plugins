@@ -70,7 +70,7 @@ class IOSBuildCommand extends Command with BuildConfig {
     final copyLib = argResults!.flag("copy");
 
     if (copyLib) {
-      final libDir = join(projectDir, "ios");
+      final libDir = join(projectDir, "ios", "Frameworks");
       final version = await pubspecVersion(projectDir);
 
       await File(join(buildDir, "$framework.zip"))

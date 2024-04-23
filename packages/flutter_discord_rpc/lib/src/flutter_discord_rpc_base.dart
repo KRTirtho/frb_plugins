@@ -5,8 +5,8 @@ final class FlutterDiscordRPC {
   static FlutterDiscordRPC? _instance;
   static FlutterDiscordRPC get instance => _instance!;
 
-  final bridge.FlutterDiscordRpc lib;
-  FlutterDiscordRPC._() : lib = createLib();
+  final bridge.FlutterDiscordRpc _lib;
+  FlutterDiscordRPC._() : _lib = createLib();
 
   static Future<void> initialize(String applicationId) async {
     if (_instance != null) {
@@ -14,26 +14,26 @@ final class FlutterDiscordRPC {
     }
     _instance = FlutterDiscordRPC._();
 
-    instance.lib.discordInit(clientId: applicationId);
+    instance._lib.discordInit(clientId: applicationId);
   }
 
   Future<void> connect() async {
-    await lib.discordConnect();
+    await _lib.discordConnect();
   }
 
   Future<void> disconnect() async {
-    await lib.discordClose();
+    await _lib.discordClose();
   }
 
   Future<void> reconnect() async {
-    await lib.discordReconnect();
+    await _lib.discordReconnect();
   }
 
   Future<void> setActivity({required bridge.RPCActivity activity}) async {
-    await lib.discordSetActivity(activity: activity);
+    await _lib.discordSetActivity(activity: activity);
   }
 
   Future<void> clearActivity() async {
-    await lib.discordClearActivity();
+    await _lib.discordClearActivity();
   }
 }
