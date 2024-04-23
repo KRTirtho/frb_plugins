@@ -36,4 +36,8 @@ final class FlutterDiscordRPC {
   Future<void> clearActivity() async {
     await _lib.discordClearActivity();
   }
+
+  Future<void> dispose() async {
+    await _lib.discordDispose();
+  }
 }

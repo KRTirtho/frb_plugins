@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -8,7 +6,7 @@ import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDiscordRPC.initialize(
-    Platform.environment['DISCORD_CLIENT_ID']!,
+    const String.fromEnvironment('DISCORD_CLIENT_ID'),
   );
   runApp(const MyApp());
 }
@@ -26,13 +24,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    FlutterDiscordRPC.instance.connect();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(seconds: 2), () async {
+        await FlutterDiscordRPC.instance.connect();
+      });
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     FlutterDiscordRPC.instance.disconnect();
+    FlutterDiscordRPC.instance.dispose();
     super.dispose();
   }
 

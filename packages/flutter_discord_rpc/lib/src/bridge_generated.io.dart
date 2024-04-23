@@ -344,6 +344,17 @@ class FlutterDiscordRpcWire implements FlutterRustBridgeWireBase {
   late final _wire_discord_set_activityPtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64, ffi.Pointer<wire_RPCActivity>)>>('wire_discord_set_activity');
   late final _wire_discord_set_activity = _wire_discord_set_activityPtr.asFunction<void Function(int, ffi.Pointer<wire_RPCActivity>)>();
 
+  void wire_discord_dispose(
+    int port_,
+  ) {
+    return _wire_discord_dispose(
+      port_,
+    );
+  }
+
+  late final _wire_discord_disposePtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('wire_discord_dispose');
+  late final _wire_discord_dispose = _wire_discord_disposePtr.asFunction<void Function(int)>();
+
   ffi.Pointer<ffi.Int64> new_box_autoadd_i64_0(
     int value,
   ) {

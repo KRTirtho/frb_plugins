@@ -98,6 +98,16 @@ fn wire_discord_set_activity_impl(
         },
     )
 }
+fn wire_discord_dispose_impl(port_: MessagePort) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, (), _>(
+        WrapInfo {
+            debug_name: "discord_dispose",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || move |task_callback| discord_dispose(),
+    )
+}
 // Section: wrapper structs
 
 // Section: static checks
@@ -181,6 +191,11 @@ mod web {
     #[wasm_bindgen]
     pub fn wire_discord_set_activity(port_: MessagePort, activity: JsValue) {
         wire_discord_set_activity_impl(port_, activity)
+    }
+
+    #[wasm_bindgen]
+    pub fn wire_discord_dispose(port_: MessagePort) {
+        wire_discord_dispose_impl(port_)
     }
 
     // Section: allocate functions
@@ -415,6 +430,11 @@ mod io {
     #[no_mangle]
     pub extern "C" fn wire_discord_set_activity(port_: i64, activity: *mut wire_RPCActivity) {
         wire_discord_set_activity_impl(port_, activity)
+    }
+
+    #[no_mangle]
+    pub extern "C" fn wire_discord_dispose(port_: i64) {
+        wire_discord_dispose_impl(port_)
     }
 
     // Section: allocate functions

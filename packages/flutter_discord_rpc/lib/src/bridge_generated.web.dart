@@ -197,6 +197,8 @@ class FlutterDiscordRpcWasmModule implements WasmModule {
   external dynamic /* void */ wire_discord_clear_activity(NativePortType port_);
 
   external dynamic /* void */ wire_discord_set_activity(NativePortType port_, List<dynamic> activity);
+
+  external dynamic /* void */ wire_discord_dispose(NativePortType port_);
 }
 
 // Section: WASM wire connector
@@ -215,4 +217,6 @@ class FlutterDiscordRpcWire extends FlutterRustBridgeWasmWireBase<FlutterDiscord
   void wire_discord_clear_activity(NativePortType port_) => wasmModule.wire_discord_clear_activity(port_);
 
   void wire_discord_set_activity(NativePortType port_, List<dynamic> activity) => wasmModule.wire_discord_set_activity(port_, activity);
+
+  void wire_discord_dispose(NativePortType port_) => wasmModule.wire_discord_dispose(port_);
 }

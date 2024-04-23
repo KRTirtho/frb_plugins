@@ -154,3 +154,9 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
 
     Ok(())
 }
+
+pub fn discord_dispose() -> anyhow::Result<()> {
+    let mut client = DISCORD_CLIENT.lock().unwrap();
+    *client = None;
+    Ok(())
+}

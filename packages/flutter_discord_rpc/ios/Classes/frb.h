@@ -86,6 +86,8 @@ void wire_discord_clear_activity(int64_t port_);
 
 void wire_discord_set_activity(int64_t port_, struct wire_RPCActivity *activity);
 
+void wire_discord_dispose(int64_t port_);
+
 int64_t *new_box_autoadd_i64_0(int64_t value);
 
 struct wire_RPCActivity *new_box_autoadd_rpc_activity_0(void);
@@ -114,6 +116,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_discord_close);
     dummy_var ^= ((int64_t) (void*) wire_discord_clear_activity);
     dummy_var ^= ((int64_t) (void*) wire_discord_set_activity);
+    dummy_var ^= ((int64_t) (void*) wire_discord_dispose);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_i64_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_rpc_activity_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_rpc_assets_0);

@@ -41,6 +41,10 @@ abstract class FlutterDiscordRpc {
   Future<void> discordSetActivity({required RPCActivity activity, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kDiscordSetActivityConstMeta;
+
+  Future<void> discordDispose({dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kDiscordDisposeConstMeta;
 }
 
 class I32Array2 extends NonGrowableListView<int> {
@@ -260,6 +264,22 @@ class FlutterDiscordRpcImpl implements FlutterDiscordRpc {
         argNames: [
           "activity"
         ],
+      );
+
+  Future<void> discordDispose({dynamic hint}) {
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_discord_dispose(port_),
+      parseSuccessData: _wire2api_unit,
+      parseErrorData: _wire2api_FrbAnyhowException,
+      constMeta: kDiscordDisposeConstMeta,
+      argValues: [],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kDiscordDisposeConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "discord_dispose",
+        argNames: [],
       );
 
   void dispose() {
