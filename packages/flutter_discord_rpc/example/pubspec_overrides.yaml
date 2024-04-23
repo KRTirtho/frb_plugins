@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: flutter_discord_rpc
+dependency_overrides:
+  flutter_discord_rpc:
+    path: ..
