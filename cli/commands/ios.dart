@@ -14,6 +14,7 @@ class IOSBuildCommand extends Command with BuildConfig {
 
   IOSBuildCommand() {
     argParser.addOption("project", abbr: "p", mandatory: true);
+    argParser.addFlag("copy", defaultsTo: false);
   }
 
   @override
@@ -65,5 +66,15 @@ class IOSBuildCommand extends Command with BuildConfig {
       zip -r $framework.zip $framework
       rm -rf ios-sim-lipo $framework
     """);
+
+    final copyLib = argResults!.flag("copy");
+
+    if (copyLib) {
+      final libDir = join(projectDir, "ios");
+      final version = await pubspecVersion(projectDir);
+
+      await File(join(buildDir, "$framework.zip"))
+          .copy(join(libDir, "$project-v$version.zip"));
+    }
   }
 }

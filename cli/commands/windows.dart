@@ -14,6 +14,7 @@ class WindowsBuildCommand extends Command with BuildConfig {
 
   WindowsBuildCommand() {
     argParser.addOption("project", abbr: "p", mandatory: true);
+    argParser.addFlag("copy", defaultsTo: false);
   }
 
   @override
@@ -61,6 +62,16 @@ class WindowsBuildCommand extends Command with BuildConfig {
     for (final (_, arch) in targets) {
       final archDir = Directory(join(buildDir, arch));
       await archDir.delete(recursive: true);
+    }
+
+    final copyLib = argResults!.flag("copy");
+
+    if (copyLib) {
+      final libDir = join(projectDir, "windows");
+      final version = await pubspecVersion(projectDir);
+
+      await File(join(buildDir, "windows.tar.gz"))
+          .copy(join(libDir, "$project-v$version.tar.gz"));
     }
   }
 }

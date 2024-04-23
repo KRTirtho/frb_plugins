@@ -14,6 +14,7 @@ class MacOSBuildCommand extends Command with BuildConfig {
 
   MacOSBuildCommand() {
     argParser.addOption("project", abbr: "p", mandatory: true);
+    argParser.addFlag("copy", defaultsTo: false);
   }
 
   @override
@@ -59,5 +60,15 @@ class MacOSBuildCommand extends Command with BuildConfig {
       zip -r $framework.zip $framework
       rm -rf macos-sim-lipo $framework
     """);
+
+    final copyLib = argResults!.flag("copy");
+
+    if (copyLib) {
+      final libDir = join(projectDir, "macos");
+      final version = await pubspecVersion(projectDir);
+
+      await File(join(buildDir, "$framework.zip"))
+          .copy(join(libDir, "$project-v$version.zip"));
+    }
   }
 }

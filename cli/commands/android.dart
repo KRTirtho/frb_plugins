@@ -15,6 +15,7 @@ class AndroidBuildCommand extends Command with BuildConfig {
 
   AndroidBuildCommand() {
     argParser.addOption("project", abbr: "p", mandatory: true);
+    argParser.addFlag("copy", defaultsTo: false);
   }
 
   @override
@@ -60,5 +61,15 @@ class AndroidBuildCommand extends Command with BuildConfig {
         .run("tar -czvf ../android.tar.gz armeabi-v7a arm64-v8a x86 x86_64");
 
     await jniDir.delete(recursive: true);
+
+    final copyLib = argResults!.flag("copy");
+
+    if (copyLib) {
+      final libDir = join(projectDir, "android");
+      final version = await pubspecVersion(projectDir);
+
+      await File(join(buildDir, "android.tar.gz"))
+          .copy(join(libDir, "$project-v$version.tar.gz"));
+    }
   }
 }

@@ -14,6 +14,7 @@ class LinuxBuildCommand extends Command with BuildConfig {
 
   LinuxBuildCommand() {
     argParser.addOption("project", abbr: "p", mandatory: true);
+    argParser.addFlag("copy", defaultsTo: false);
   }
 
   @override
@@ -66,6 +67,16 @@ class LinuxBuildCommand extends Command with BuildConfig {
     for (final (_, arch) in targets) {
       final archDir = Directory(join(buildDir, arch));
       await archDir.delete(recursive: true);
+    }
+
+    final copyLib = argResults!.flag("copy");
+
+    if (copyLib) {
+      final libDir = join(projectDir, "linux");
+      final version = await pubspecVersion(projectDir);
+
+      await File(join(buildDir, "linux.tar.gz"))
+          .copy(join(libDir, "$project-v$version.tar.gz"));
     }
   }
 }
