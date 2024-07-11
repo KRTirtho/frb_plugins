@@ -8,52 +8,62 @@ use discord_rich_presence::{
 use lazy_static::lazy_static;
 
 lazy_static! {
-    static ref DISCORD_CLIENT: Mutex<Option<DiscordIpcClient>> = Mutex::new(None);
+    static ref DISCORD_CLIENT: Mutex<Option<Box<DiscordIpcClient>>> = Mutex::new(None);
 }
 
 pub fn discord_init(client_id: String) -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    *client = Some(
+    *client = Some(Box::new(
         DiscordIpcClient::new(client_id.as_str())
             .map_err(|_| anyhow::anyhow!("Failed to create IPC client"))?,
-    );
+    ));
+
     Ok(())
 }
 
 pub fn discord_connect() -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    client
+
+    let res = client
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("IPC client not initialized"))?
         .connect()
-        .map_err(|e| anyhow::anyhow!("Failed to connect to Discord IPC: {:?}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to connect to Discord IPC: {:?}", e));
+
+    res
 }
 
 pub fn discord_reconnect() -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    client
+    let res = client
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("IPC client not initialized"))?
         .reconnect()
-        .map_err(|e| anyhow::anyhow!("Failed to reconnect to Discord IPC: {:?}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to reconnect to Discord IPC: {:?}", e));
+
+    res
 }
 
 pub fn discord_close() -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    client
+    let res = client
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("IPC client not initialized"))?
         .close()
-        .map_err(|e| anyhow::anyhow!("Failed to close to Discord IPC: {:?}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to close to Discord IPC: {:?}", e));
+
+    res
 }
 
 pub fn discord_clear_activity() -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    client
+    let res = client
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("IPC client not initialized"))?
         .clear_activity()
-        .map_err(|e| anyhow::anyhow!("Failed to clear presence: {:?}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to clear presence: {:?}", e));
+
+    res
 }
 
 pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
@@ -158,5 +168,6 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
 pub fn discord_dispose() -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
     *client = None;
+
     Ok(())
 }

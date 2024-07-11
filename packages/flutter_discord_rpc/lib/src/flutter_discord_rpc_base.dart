@@ -17,23 +17,40 @@ final class FlutterDiscordRPC {
     instance._lib.discordInit(clientId: applicationId);
   }
 
+  bool _isConnected = false;
+  bool get isConnected => _isConnected;
+
   Future<void> connect() async {
-    await _lib.discordConnect();
+    try {
+      await _lib.discordConnect();
+      _isConnected = true;
+    } catch (e) {
+      _isConnected = false;
+      rethrow;
+    }
   }
 
   Future<void> disconnect() async {
-    await _lib.discordClose();
+    try {
+      await _lib.discordClose();
+    } catch (e) {
+      _isConnected = false;
+      rethrow;
+    }
   }
 
   Future<void> reconnect() async {
+    if (!_isConnected) return;
     await _lib.discordReconnect();
   }
 
   Future<void> setActivity({required bridge.RPCActivity activity}) async {
+    if (!_isConnected) return;
     await _lib.discordSetActivity(activity: activity);
   }
 
   Future<void> clearActivity() async {
+    if (!_isConnected) return;
     await _lib.discordClearActivity();
   }
 

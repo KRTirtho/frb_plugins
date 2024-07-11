@@ -1,12 +1,14 @@
 pub mod api;
 pub mod types;
 
+use std::thread;
+
 use anyhow::Ok;
 use api::*;
 use types::*;
 
 fn main() -> anyhow::Result<()> {
-    discord_init("<app-id>".to_string())?;
+    discord_init("1176718791388975124".to_string())?;
 
     discord_connect()?;
 
@@ -47,6 +49,8 @@ fn main() -> anyhow::Result<()> {
             ),
         }),
     })?;
+
+    thread::sleep(std::time::Duration::from_secs(10));
 
     Ok(())
 }

@@ -6,7 +6,7 @@ import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDiscordRPC.initialize(
-    const String.fromEnvironment('DISCORD_CLIENT_ID'),
+    "<app-id>",
   );
   runApp(const MyApp());
 }
@@ -24,12 +24,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(seconds: 2), () async {
-        await FlutterDiscordRPC.instance.connect();
-      });
-    });
     super.initState();
+    FlutterDiscordRPC.instance.connect();
   }
 
   @override
