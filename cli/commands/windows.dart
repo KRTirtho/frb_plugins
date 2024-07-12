@@ -53,8 +53,10 @@ class WindowsBuildCommand extends Command with BuildConfig {
       await shell.run("""
         rustup target add $target
         cargo ${Platform.isWindows ? "" : "xwin"} build --target=$target -r --manifest-path ${join(projectDir, "Cargo.toml")}
-        cp ${join(projectDir, "target", target, "release", libname)} ${archDir.path}
       """);
+
+      await File(join(projectDir, "target", target, "release", libname))
+          .copy(join(archDir.path, libname));
     }
 
     await shell.run("tar -czvf windows.tar.gz windows-x64 windows-arm64");
