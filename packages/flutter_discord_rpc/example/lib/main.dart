@@ -72,7 +72,9 @@ class _MyAppState extends State<MyApp> {
                 ),
                 TextButton(
                   child: const Text("Clear Activity"),
-                  onPressed: () {},
+                  onPressed: () {
+                    FlutterDiscordRPC.instance.clearActivity();
+                  },
                 ),
               ],
             ),
