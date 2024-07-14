@@ -1,4 +1,4 @@
-set(LibraryVersion "flutter_discord_rpc-v0.0.1") # generated; do not edit
+set(LibraryVersion "flutter_discord_rpc-v0.1.0") # generated; do not edit
 
 # The Flutter tooling requires that developers have a version of Visual Studio
 # installed that includes CMake 3.14 or later. You should not increase this
