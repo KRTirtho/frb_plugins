@@ -1,92 +1,104 @@
 # flutter_discord_rpc
 
-A new Flutter FFI plugin project.
+Discord RPC support for Flutter desktop platforms through IPC.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter
-[FFI plugin](https://docs.flutter.dev/development/platform-integration/c-interop),
-a specialized package that includes native code directly invoked with Dart FFI.
+Run the following:
 
-## Project stucture
-
-This template uses the following structure:
-
-* `src`: Contains the native source code, and a CmakeFile.txt file for building
-  that source code into a dynamic library.
-
-* `lib`: Contains the Dart code that defines the API of the plugin, and which
-  calls into the native code using `dart:ffi`.
-
-* platform folders (`android`, `ios`, `windows`, etc.): Contains the build files
-  for building and bundling the native code library with the platform application.
-
-## Buidling and bundling native code
-
-The `pubspec.yaml` specifies FFI plugins as follows:
-
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        ffiPlugin: true
+```shell
+> flutter pub add flutter_discord_rpc
 ```
 
-This configuration invokes the native build for the various target platforms
-and bundles the binaries in Flutter applications using these FFI plugins.
+### Usage
 
-This can be combined with dartPluginClass, such as when FFI is used for the
-implementation of one platform in a federated plugin:
+First, create discord application from https://discord.com/developers/applications. After that, you will get an application id. Use that application id in place of `<app-id>` in the below code.
 
-```yaml
-  plugin:
-    implements: some_other_plugin
-    platforms:
-      some_platform:
-        dartPluginClass: SomeClass
-        ffiPlugin: true
+```dart
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDiscordRPC.initialize(
+    "<app-id>",
+  );
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late int sumResult;
+  late Future<int> sumAsyncResult;
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterDiscordRPC.instance.connect();
+  }
+
+  @override
+  void dispose() {
+    FlutterDiscordRPC.instance.disconnect();
+    FlutterDiscordRPC.instance.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Native Packages'),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                TextButton(
+                  child: const Text("Set Activity"),
+                  onPressed: () {
+                    FlutterDiscordRPC.instance.setActivity(
+                      activity: RPCActivity(
+                        assets: const RPCAssets(
+                          largeText: "Hello Testing!!!",
+                          smallText: "Hello Testing!!!",
+                        ),
+                        buttons: [
+                          const RPCButton(
+                              label: "Google", url: "https://google.com"),
+                        ],
+                        details: "Very important details",
+                        state: "Very important state",
+                        timestamps: RPCTimestamps(
+                          start: DateTime.now().millisecondsSinceEpoch,
+                          end: DateTime.now().millisecondsSinceEpoch + 1000,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                TextButton(
+                  child: const Text("Clear Activity"),
+                  onPressed: () {
+                    FlutterDiscordRPC.instance.clearActivity();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 ```
-
-A plugin can have both FFI and method channels:
-
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        pluginClass: SomeName
-        ffiPlugin: true
-```
-
-The native build systems that are invoked by FFI (and method channel) plugins are:
-
-* For Android: Gradle, which invokes the Android NDK for native builds.
-  * See the documentation in android/build.gradle.
-* For iOS and MacOS: Xcode, via CocoaPods.
-  * See the documentation in ios/flutter_discord_rpc.podspec.
-  * See the documentation in macos/flutter_discord_rpc.podspec.
-* For Linux and Windows: CMake.
-  * See the documentation in linux/CMakeLists.txt.
-  * See the documentation in windows/CMakeLists.txt.
-
-## Binding to native code
-
-To use the native code, bindings in Dart are needed.
-To avoid writing these by hand, they are generated from the header file
-(`src/flutter_discord_rpc.h`) by `package:ffigen`.
-Regenerate the bindings by running `flutter pub run ffigen --config ffigen.yaml`.
-
-## Invoking native code
-
-Very short-running native functions can be directly invoked from any isolate.
-For example, see `sum` in `lib/flutter_discord_rpc.dart`.
-
-Longer-running functions should be invoked on a helper isolate to avoid
-dropping frames in Flutter applications.
-For example, see `sumAsync` in `lib/flutter_discord_rpc.dart`.
-
-## Flutter help
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
