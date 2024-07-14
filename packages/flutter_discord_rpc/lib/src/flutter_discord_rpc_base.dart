@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_discord_rpc/src/ffi.dart';
 import 'package:flutter_discord_rpc/src/bridge_generated.dart' as bridge;
+import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 
 final class FlutterDiscordRPC {
   static FlutterDiscordRPC? _instance;
@@ -43,7 +44,6 @@ final class FlutterDiscordRPC {
       _onConnected(true);
       _timer?.cancel();
     } catch (e) {
-      _onConnected(false);
       if (autoRetry) {
         _timer = Timer.periodic(retryDelay, (timer) async {
           try {
@@ -56,6 +56,7 @@ final class FlutterDiscordRPC {
         });
         return;
       }
+      _onConnected(false);
       rethrow;
     }
   }
@@ -76,13 +77,29 @@ final class FlutterDiscordRPC {
   }
 
   Future<void> setActivity({required bridge.RPCActivity activity}) async {
-    if (!_isConnected) return;
-    await _lib.discordSetActivity(activity: activity);
+    try {
+      await _lib.discordSetActivity(activity: activity);
+    } on FrbAnyhowException catch (e) {
+      if (e.anyhow.contains("BrokenPipe")) {
+        await connect(autoRetry: true);
+        await _lib.discordSetActivity(activity: activity);
+      } else {
+        rethrow;
+      }
+    }
   }
 
   Future<void> clearActivity() async {
     if (!_isConnected) return;
-    await _lib.discordClearActivity();
+    try {
+      await _lib.discordClearActivity();
+    } catch (e) {
+      if (e is FrbAnyhowException && e.anyhow.contains("BrokenPipe")) {
+        await disconnect();
+        return;
+      }
+      rethrow;
+    }
   }
 
   Future<void> dispose() async {
