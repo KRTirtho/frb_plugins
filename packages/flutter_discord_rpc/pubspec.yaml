@@ -1,5 +1,5 @@
 name: flutter_discord_rpc
-description: A new Flutter FFI plugin project.
+description: Discord RPC support for Flutter desktop platforms
 version: 0.1.0
 homepage: https://github.com/KRTirtho/frb_plugins
 
@@ -45,9 +45,9 @@ flutter:
   plugin:
     platforms:
       android:
-        ffiPlugin: true
+        ffiPlugin: false
       ios:
-        ffiPlugin: true
+        ffiPlugin: false
       linux:
         ffiPlugin: true
       macos:
