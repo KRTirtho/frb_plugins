@@ -1,3 +1,8 @@
+## 0.5.5
+
+ - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.
+ - **FEAT**(flutter_discord_rpc): add complete support.
+
 ## 0.5.4
 
  - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.

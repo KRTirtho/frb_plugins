@@ -1,3 +1,7 @@
+## 0.1.0+1
+
+ - **DOCS**: add flutter_discord_rpc readme.
+
 ## 0.1.0
 
  - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.

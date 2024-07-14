@@ -15,6 +15,39 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`flutter_discord_rpc` - `v0.1.0+1`](#flutter_discord_rpc---v0101)
+ - [`metadata_god` - `v0.5.5`](#metadata_god---v055)
+ - [`smtc_windows` - `v0.1.5`](#smtc_windows---v015)
+
+---
+
+#### `flutter_discord_rpc` - `v0.1.0+1`
+
+ - **DOCS**: add flutter_discord_rpc readme.
+
+#### `metadata_god` - `v0.5.5`
+
+ - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.
+ - **FEAT**(flutter_discord_rpc): add complete support.
+
+#### `smtc_windows` - `v0.1.5`
+
+ - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.
+ - **FEAT**(flutter_discord_rpc): add complete support.
+
+
+## 2024-07-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`flutter_discord_rpc` - `v0.1.0`](#flutter_discord_rpc---v010)
  - [`metadata_god` - `v0.5.4`](#metadata_god---v054)
  - [`smtc_windows` - `v0.1.4`](#smtc_windows---v014)
