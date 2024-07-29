@@ -2,3 +2,4 @@ include: package:lints/recommended.yaml
 analyzer:
   exclude:
     - brick/**
+    - packages/**/lib/**/frb_generated.*.dart

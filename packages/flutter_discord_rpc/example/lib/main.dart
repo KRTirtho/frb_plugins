@@ -6,7 +6,7 @@ import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDiscordRPC.initialize(
-    "<app-id>",
+    "1176718791388975124",
   );
   runApp(const MyApp());
 }

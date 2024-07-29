@@ -1,15 +1,6 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library flutter_discord_rpc;
 
 export 'src/flutter_discord_rpc_base.dart';
-export 'src/bridge_generated.dart'
-    show
-        RPCActivity,
-        RPCTimestamps,
-        RPCParty,
-        RPCAssets,
-        RPCButton,
-        RPCSecrets,
-        I32Array2;
+export 'src/rust/api/types.dart'
+    show RPCActivity, RPCTimestamps, RPCParty, RPCAssets, RPCButton, RPCSecrets;
+export 'src/rust/lib.dart' show I32Array2;
