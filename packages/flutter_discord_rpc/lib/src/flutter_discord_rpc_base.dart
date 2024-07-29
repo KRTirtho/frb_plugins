@@ -21,6 +21,7 @@ final class FlutterDiscordRPC {
     _instance = FlutterDiscordRPC._();
 
     await RustLib.init();
+    await RustLib.instance.executeRustInitializers();
     await api.discordInit(clientId: applicationId);
   }
 

@@ -21,6 +21,7 @@ abstract class MetadataGod {
   /// ```
   static Future<void> initialize() async {
     await RustLib.init();
+    await RustLib.instance.executeRustInitializers();
   }
 
   /// Read metadata from a mp3, m4a, ogg & flac file
