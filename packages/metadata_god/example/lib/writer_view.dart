@@ -97,7 +97,8 @@ class _WriterViewState extends State<WriterView> {
                   discNumber: int.tryParse(discNumberController.text) ?? 0,
                   discTotal: int.tryParse(discTotalController.text) ?? 0,
                   durationMs: double.tryParse(durationMsController.text) ?? 0.0,
-                  fileSize: int.tryParse(fileSizeController.text) ?? 0,
+                  fileSize:
+                      BigInt.tryParse(fileSizeController.text) ?? BigInt.zero,
                   genre: genreController.text,
                   picture: null,
                   title: titleController.text,

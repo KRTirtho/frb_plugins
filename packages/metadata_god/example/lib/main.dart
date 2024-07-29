@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:metadata_god/metadata_god.dart';
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print("Calling: initState");
+    debugPrint("Calling: initState");
     selectedFile = PlatformFile(
       name: "test.m4a",
       path: "assets/test.m4a",
@@ -53,21 +55,34 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         this.metadata = metadata;
       });
-      print("metadata.album: ${metadata.album}");
-      print("metadata.albumArtist: ${metadata.albumArtist}");
-      print("metadata.artist: ${metadata.artist}");
-      print("metadata.discNumber: ${metadata.discNumber}");
-      print("metadata.discTotal: ${metadata.discTotal}");
-      print("metadata.durationMs: ${metadata.durationMs}");
-      print("metadata.fileSize: ${metadata.fileSize}");
-      print("metadata.genre: ${metadata.genre}");
-      print("metadata.picture: ${metadata.picture?.mimeType}");
-      print("metadata.title: ${metadata.title}");
-      print("metadata.trackNumber: ${metadata.trackNumber}");
-      print("metadata.trackTotal: ${metadata.trackTotal}");
-      print("metadata.year: ${metadata.year}");
+      debugPrint("metadata.album: ${metadata.album}");
+      debugPrint("metadata.albumArtist: ${metadata.albumArtist}");
+      debugPrint("metadata.artist: ${metadata.artist}");
+      debugPrint("metadata.discNumber: ${metadata.discNumber}");
+      debugPrint("metadata.discTotal: ${metadata.discTotal}");
+      debugPrint("metadata.durationMs: ${metadata.durationMs}");
+      debugPrint("metadata.fileSize: ${metadata.fileSize}");
+      debugPrint("metadata.genre: ${metadata.genre}");
+      debugPrint("metadata.picture: ${metadata.picture?.mimeType}");
+      debugPrint("metadata.title: ${metadata.title}");
+      debugPrint("metadata.trackNumber: ${metadata.trackNumber}");
+      debugPrint("metadata.trackTotal: ${metadata.trackTotal}");
+      debugPrint("metadata.year: ${metadata.year}");
     });
-    print("End: initState");
+    debugPrint("End: initState");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final entities = await Directory("/Users/krtirtho/Music/Spotube")
+          .list(recursive: true)
+          .toList();
+
+      for (final entity in entities) {
+        if (entity is! File || !entity.path.endsWith(".m4a")) continue;
+        final metadata = await MetadataGod.readMetadata(file: entity.path);
+
+        debugPrint("[${entity.path}] metadata.title: ${metadata.title}");
+      }
+    });
   }
 
   @override
