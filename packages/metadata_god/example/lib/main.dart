@@ -94,11 +94,20 @@ class _MyAppState extends State<MyApp> {
                         ElevatedButton(
                           onPressed: () async {
                             final result = await FilePicker.platform.pickFiles(
-                              type: FileType.audio,
+                              type: FileType.custom,
                               allowCompression: false,
                               allowMultiple: false,
                               withData: false,
                               withReadStream: false,
+                              allowedExtensions: [
+                                "mp3",
+                                "m4a",
+                                "flac",
+                                "wav",
+                                "ogg",
+                                "aac",
+                                "wma",
+                              ],
                             );
 
                             if (result == null) return;

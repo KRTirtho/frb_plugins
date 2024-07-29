@@ -1,0 +1,21 @@
+PODS:
+  - FlutterMacOS (1.0.0)
+  - metadata_god (0.0.1)
+
+DEPENDENCIES:
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - metadata_god (from `Flutter/ephemeral/.symlinks/plugins/metadata_god/macos`)
+
+EXTERNAL SOURCES:
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  metadata_god:
+    :path: Flutter/ephemeral/.symlinks/plugins/metadata_god/macos
+
+SPEC CHECKSUMS:
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  metadata_god: ef5a50cbb6cea48088e2a191cd43b5eac374b183
+
+PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
+
+COCOAPODS: 1.15.2
