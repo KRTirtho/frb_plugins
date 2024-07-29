@@ -1,0 +1,15 @@
+[package]
+name = "smtc_windows"
+version = "0.1.5"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+flutter_rust_bridge = "=2.1.0"
+anyhow = '1'
+
+[dependencies.windows]
+version = '0.56.*'
+features = ['Media', 'Media_Playback', 'Foundation', 'Storage_Streams']

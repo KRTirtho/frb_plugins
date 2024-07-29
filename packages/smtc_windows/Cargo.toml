@@ -1,5 +1,5 @@
 [workspace]
-members = ["native"]
+members = ["rust"]
 
 [profile.release]
 # turn off striping for macOS as it needs
