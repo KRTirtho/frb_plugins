@@ -12,6 +12,9 @@ Add `smtc_windows` as a dependency in your pubspec.yaml file.
 flutter pub add smtc_windows
 ```
 
+## Requirements
+- Make sure [`rustup`](https://rustup.rs) is installed.
+
 ### Support Development
 
 <a href="https://www.buymeacoffee.com/krtirtho">
@@ -23,6 +26,20 @@ flutter pub add smtc_windows
 ### Usage
 
 ```dart
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SMTCWindows.initialize();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
 class _MyAppState extends State<MyApp> {
   late SMTCWindows smtc;
 

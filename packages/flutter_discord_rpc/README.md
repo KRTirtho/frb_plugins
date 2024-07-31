@@ -10,6 +10,9 @@ Run the following:
 > flutter pub add flutter_discord_rpc
 ```
 
+## Requirements
+- Make sure [`rustup`](https://rustup.rs) is installed.
+
 ### Usage
 
 First, create discord application from https://discord.com/developers/applications. After that, you will get an application id. Use that application id in place of `<app-id>` in the below code.

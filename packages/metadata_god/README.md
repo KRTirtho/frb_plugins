@@ -18,6 +18,9 @@ Run in terminal:
 $ flutter pub add metadata_god
 ```
 
+## Requirements
+- Make sure [`rustup`](https://rustup.rs) is installed.
+
 ## Configuration
 ### Android 
 For using `metadata_god` in Android it needs `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` permissions
@@ -73,9 +76,9 @@ import 'package:mime/mime.dart';
 import 'package:metadata_god/metadata_god.dart';
 
 // Initialize the plugin
-void main(){
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MetadataGod.initialize();
+  await MetadataGod.initialize();
   runApp(const MyApp());
 }
 
