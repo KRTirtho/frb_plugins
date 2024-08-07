@@ -107,6 +107,6 @@ final class FlutterDiscordRPC {
     _timer?.cancel();
     _timer = null;
     await api.discordDispose();
-    await RustLib.dispose();
+    RustLib.dispose();
   }
 }
