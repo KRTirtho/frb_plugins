@@ -159,6 +159,7 @@ class SMTCWindows {
 
   Future<void> dispose() async {
     _internal.dispose();
+    await RustLib.dispose();
   }
 
   Future<void> disableSmtc() {
