@@ -7,6 +7,8 @@ use discord_rich_presence::{
 };
 use lazy_static::lazy_static;
 
+use super::types::ActivityType;
+
 lazy_static! {
     static ref DISCORD_CLIENT: Mutex<Option<Box<DiscordIpcClient>>> = Mutex::new(None);
 }
@@ -154,6 +156,12 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
         }
 
         r_activity = r_activity.buttons(r_buttons);
+    }
+
+    if let Some(activity_type) = activity.activity_type {
+        if activity_type == ActivityType::Playing {
+            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Playing)
+        }
     }
 
     client
