@@ -162,6 +162,19 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
         if activity_type == ActivityType::Playing {
             r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Playing)
         }
+
+        if activity_type == ActivityType::Listening {
+            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Listening)
+        }
+
+        if activity_type == ActivityType::Watching {
+            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Watching)
+        }
+
+
+        if activity_type == ActivityType::Competing {
+            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Competing)
+        }
     }
 
     client

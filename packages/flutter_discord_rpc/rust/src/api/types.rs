@@ -66,7 +66,7 @@ pub struct RPCButton {
 
 /// An enum representing the activity type used by an
 /// `RPCActivity`
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum ActivityType {
     /// Activity type "Playing X"
     Playing = 0,

@@ -36,7 +36,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_opaque = RustOpaqueMoi,
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.1.0";
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.2.0";
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 1597128205;
 
 // Section: executor
@@ -338,6 +338,20 @@ impl SseDecode for String {
     }
 }
 
+impl SseDecode for crate::api::types::ActivityType {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::api::types::ActivityType::Playing,
+            1 => crate::api::types::ActivityType::Listening,
+            2 => crate::api::types::ActivityType::Watching,
+            3 => crate::api::types::ActivityType::Competing,
+            _ => unreachable!("Invalid variant for ActivityType: {}", inner),
+        };
+    }
+}
+
 impl SseDecode for i32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -401,6 +415,17 @@ impl SseDecode for Option<String> {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         if (<bool>::sse_decode(deserializer)) {
             return Some(<String>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::api::types::ActivityType> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::api::types::ActivityType>::sse_decode(deserializer));
         } else {
             return None;
         }
@@ -497,6 +522,8 @@ impl SseDecode for crate::api::types::RPCActivity {
         let mut var_assets = <Option<crate::api::types::RPCAssets>>::sse_decode(deserializer);
         let mut var_secrets = <Option<crate::api::types::RPCSecrets>>::sse_decode(deserializer);
         let mut var_buttons = <Option<Vec<crate::api::types::RPCButton>>>::sse_decode(deserializer);
+        let mut var_activityType =
+            <Option<crate::api::types::ActivityType>>::sse_decode(deserializer);
         return crate::api::types::RPCActivity {
             state: var_state,
             details: var_details,
@@ -505,6 +532,7 @@ impl SseDecode for crate::api::types::RPCActivity {
             assets: var_assets,
             secrets: var_secrets,
             buttons: var_buttons,
+            activity_type: var_activityType,
         };
     }
 }
@@ -630,6 +658,29 @@ fn pde_ffi_dispatcher_sync_impl(
 // Section: rust2dart
 
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::types::ActivityType {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::Playing => 0.into_dart(),
+            Self::Listening => 1.into_dart(),
+            Self::Watching => 2.into_dart(),
+            Self::Competing => 3.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::types::ActivityType
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::types::ActivityType>
+    for crate::api::types::ActivityType
+{
+    fn into_into_dart(self) -> crate::api::types::ActivityType {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::api::types::RPCActivity {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -640,6 +691,7 @@ impl flutter_rust_bridge::IntoDart for crate::api::types::RPCActivity {
             self.assets.into_into_dart().into_dart(),
             self.secrets.into_into_dart().into_dart(),
             self.buttons.into_into_dart().into_dart(),
+            self.activity_type.into_into_dart().into_dart(),
         ]
         .into_dart()
     }
@@ -766,6 +818,24 @@ impl SseEncode for String {
     }
 }
 
+impl SseEncode for crate::api::types::ActivityType {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::api::types::ActivityType::Playing => 0,
+                crate::api::types::ActivityType::Listening => 1,
+                crate::api::types::ActivityType::Watching => 2,
+                crate::api::types::ActivityType::Competing => 3,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
 impl SseEncode for i32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -829,6 +899,16 @@ impl SseEncode for Option<String> {
         <bool>::sse_encode(self.is_some(), serializer);
         if let Some(value) = self {
             <String>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::api::types::ActivityType> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::api::types::ActivityType>::sse_encode(value, serializer);
         }
     }
 }
@@ -913,6 +993,7 @@ impl SseEncode for crate::api::types::RPCActivity {
         <Option<crate::api::types::RPCAssets>>::sse_encode(self.assets, serializer);
         <Option<crate::api::types::RPCSecrets>>::sse_encode(self.secrets, serializer);
         <Option<Vec<crate::api::types::RPCButton>>>::sse_encode(self.buttons, serializer);
+        <Option<crate::api::types::ActivityType>>::sse_encode(self.activity_type, serializer);
     }
 }
 
@@ -981,7 +1062,7 @@ impl SseEncode for bool {
 #[cfg(not(target_family = "wasm"))]
 mod io {
     // This file is automatically generated, so please do not edit it.
-    // Generated by `flutter_rust_bridge`@ 2.1.0.
+    // Generated by `flutter_rust_bridge`@ 2.2.0.
 
     // Section: imports
 
@@ -1003,7 +1084,7 @@ pub use io::*;
 #[cfg(target_family = "wasm")]
 mod web {
     // This file is automatically generated, so please do not edit it.
-    // Generated by `flutter_rust_bridge`@ 2.1.0.
+    // Generated by `flutter_rust_bridge`@ 2.2.0.
 
     // Section: imports
 
