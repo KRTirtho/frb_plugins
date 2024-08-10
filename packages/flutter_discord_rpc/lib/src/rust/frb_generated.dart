@@ -298,6 +298,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ActivityType dco_decode_activity_type(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return ActivityType.values[raw as int];
+  }
+
+  @protected
+  ActivityType dco_decode_box_autoadd_activity_type(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_activity_type(raw);
+  }
+
+  @protected
   PlatformInt64 dco_decode_box_autoadd_i_64(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_i_64(raw);
@@ -376,6 +388,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ActivityType? dco_decode_opt_box_autoadd_activity_type(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_activity_type(raw);
+  }
+
+  @protected
   PlatformInt64? dco_decode_opt_box_autoadd_i_64(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_i_64(raw);
@@ -421,8 +439,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   RPCActivity dco_decode_rpc_activity(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 7)
-      throw Exception('unexpected arr length: expect 7 but see ${arr.length}');
+    if (arr.length != 8)
+      throw Exception('unexpected arr length: expect 8 but see ${arr.length}');
     return RPCActivity(
       state: dco_decode_opt_String(arr[0]),
       details: dco_decode_opt_String(arr[1]),
@@ -431,6 +449,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       assets: dco_decode_opt_box_autoadd_rpc_assets(arr[4]),
       secrets: dco_decode_opt_box_autoadd_rpc_secrets(arr[5]),
       buttons: dco_decode_opt_list_rpc_button(arr[6]),
+      activityType: dco_decode_opt_box_autoadd_activity_type(arr[7]),
     );
   }
 
@@ -521,6 +540,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
     return utf8.decoder.convert(inner);
+  }
+
+  @protected
+  ActivityType sse_decode_activity_type(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return ActivityType.values[inner];
+  }
+
+  @protected
+  ActivityType sse_decode_box_autoadd_activity_type(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_activity_type(deserializer));
   }
 
   @protected
@@ -618,6 +651,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ActivityType? sse_decode_opt_box_autoadd_activity_type(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_activity_type(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
   PlatformInt64? sse_decode_opt_box_autoadd_i_64(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
@@ -709,6 +754,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_assets = sse_decode_opt_box_autoadd_rpc_assets(deserializer);
     var var_secrets = sse_decode_opt_box_autoadd_rpc_secrets(deserializer);
     var var_buttons = sse_decode_opt_list_rpc_button(deserializer);
+    var var_activityType =
+        sse_decode_opt_box_autoadd_activity_type(deserializer);
     return RPCActivity(
         state: var_state,
         details: var_details,
@@ -716,7 +763,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         party: var_party,
         assets: var_assets,
         secrets: var_secrets,
-        buttons: var_buttons);
+        buttons: var_buttons,
+        activityType: var_activityType);
   }
 
   @protected
@@ -795,6 +843,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_String(String self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
+  }
+
+  @protected
+  void sse_encode_activity_type(ActivityType self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_activity_type(
+      ActivityType self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_activity_type(self, serializer);
   }
 
   @protected
@@ -894,6 +955,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_opt_box_autoadd_activity_type(
+      ActivityType? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_activity_type(self, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_box_autoadd_i_64(
       PlatformInt64? self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -979,6 +1051,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_opt_box_autoadd_rpc_assets(self.assets, serializer);
     sse_encode_opt_box_autoadd_rpc_secrets(self.secrets, serializer);
     sse_encode_opt_list_rpc_button(self.buttons, serializer);
+    sse_encode_opt_box_autoadd_activity_type(self.activityType, serializer);
   }
 
   @protected

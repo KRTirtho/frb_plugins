@@ -10,6 +10,7 @@ pub struct RPCActivity {
     pub assets: Option<RPCAssets>,
     pub secrets: Option<RPCSecrets>,
     pub buttons: Option<Vec<RPCButton>>,
+    pub activity_type: Option<ActivityType>,
 }
 
 /// A struct representing an `RPCActivity`'s timestamps
@@ -61,4 +62,18 @@ pub struct RPCSecrets {
 pub struct RPCButton {
     pub label: String,
     pub url: String,
+}
+
+/// An enum representing the activity type used by an
+/// `RPCActivity`
+#[derive(Clone, PartialEq)]
+pub enum ActivityType {
+    /// Activity type "Playing X"
+    Playing = 0,
+    /// Activity type "Listening to X"
+    Listening = 2,
+    /// Activity type "Watching X"
+    Watching = 3,
+    /// Activity type "Competing in X"
+    Competing = 5,
 }

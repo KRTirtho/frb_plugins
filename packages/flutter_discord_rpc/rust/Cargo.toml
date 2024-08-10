@@ -8,6 +8,6 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 anyhow = "1.0.86"
-discord-rich-presence = "0.2.4"
+discord-rich-presence = { git = "https://github.com/vionya/discord-rich-presence.git" }
 flutter_rust_bridge = "=2.1.0"
 lazy_static = "1.5.0"

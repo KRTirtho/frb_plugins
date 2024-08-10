@@ -7,6 +7,8 @@ use discord_rich_presence::{
 };
 use lazy_static::lazy_static;
 
+use super::types::ActivityType;
+
 lazy_static! {
     static ref DISCORD_CLIENT: Mutex<Option<Box<DiscordIpcClient>>> = Mutex::new(None);
 }
@@ -156,6 +158,15 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
         r_activity = r_activity.buttons(r_buttons);
     }
 
+    if let Some(activity_type) = &activity.activity_type {
+        r_activity = r_activity.activity_type(match activity_type {
+            ActivityType::Playing => discord_rich_presence::activity::ActivityType::Playing,
+            ActivityType::Listening => discord_rich_presence::activity::ActivityType::Listening,
+            ActivityType::Watching => discord_rich_presence::activity::ActivityType::Watching,
+            ActivityType::Competing => discord_rich_presence::activity::ActivityType::Competing,
+        });
+    }
+
     client
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("IPC client not initialized"))?
@@ -171,7 +182,6 @@ pub fn discord_dispose() -> anyhow::Result<()> {
 
     Ok(())
 }
-
 
 #[flutter_rust_bridge::frb(init)]
 pub fn init_app() {

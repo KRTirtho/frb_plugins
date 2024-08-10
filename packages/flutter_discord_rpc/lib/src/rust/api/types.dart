@@ -7,7 +7,24 @@ import '../frb_generated.dart';
 import '../lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `clone`, `clone`, `clone`, `clone`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `eq`
+
+/// An enum representing the activity type used by an
+/// `RPCActivity`
+enum ActivityType {
+  /// Activity type "Playing X"
+  playing,
+
+  /// Activity type "Listening to X"
+  listening,
+
+  /// Activity type "Watching X"
+  watching,
+
+  /// Activity type "Competing in X"
+  competing,
+  ;
+}
 
 /// A struct representing a Discord rich presence activity
 /// Note that all methods return `Self`, and can be chained
@@ -20,6 +37,7 @@ class RPCActivity {
   final RPCAssets? assets;
   final RPCSecrets? secrets;
   final List<RPCButton>? buttons;
+  final ActivityType? activityType;
 
   const RPCActivity({
     this.state,
@@ -29,6 +47,7 @@ class RPCActivity {
     this.assets,
     this.secrets,
     this.buttons,
+    this.activityType,
   });
 
   @override
@@ -39,7 +58,8 @@ class RPCActivity {
       party.hashCode ^
       assets.hashCode ^
       secrets.hashCode ^
-      buttons.hashCode;
+      buttons.hashCode ^
+      activityType.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -52,7 +72,8 @@ class RPCActivity {
           party == other.party &&
           assets == other.assets &&
           secrets == other.secrets &&
-          buttons == other.buttons;
+          buttons == other.buttons &&
+          activityType == other.activityType;
 }
 
 /// A struct representing the art assets and hover text
