@@ -25,7 +25,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    FlutterDiscordRPC.instance.connect();
+    FlutterDiscordRPC.instance
+        .connect(autoRetry: true, retryDelay: const Duration(seconds: 10));
   }
 
   @override
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
                           start: DateTime.now().millisecondsSinceEpoch,
                           end: DateTime.now().millisecondsSinceEpoch + 1000,
                         ),
+                        activityType: ActivityType.listening,
                       ),
                     );
                   },
