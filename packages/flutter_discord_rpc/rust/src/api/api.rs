@@ -158,23 +158,13 @@ pub fn discord_set_activity(activity: RPCActivity) -> anyhow::Result<()> {
         r_activity = r_activity.buttons(r_buttons);
     }
 
-    if let Some(activity_type) = activity.activity_type {
-        if activity_type == ActivityType::Playing {
-            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Playing)
-        }
-
-        if activity_type == ActivityType::Listening {
-            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Listening)
-        }
-
-        if activity_type == ActivityType::Watching {
-            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Watching)
-        }
-
-
-        if activity_type == ActivityType::Competing {
-            r_activity = r_activity.activity_type(discord_rich_presence::activity::ActivityType::Competing)
-        }
+    if let Some(activity_type) = &activity.activity_type {
+        r_activity = r_activity.activity_type(match activity_type {
+            ActivityType::Playing => discord_rich_presence::activity::ActivityType::Playing,
+            ActivityType::Listening => discord_rich_presence::activity::ActivityType::Listening,
+            ActivityType::Watching => discord_rich_presence::activity::ActivityType::Watching,
+            ActivityType::Competing => discord_rich_presence::activity::ActivityType::Competing,
+        });
     }
 
     client
@@ -192,7 +182,6 @@ pub fn discord_dispose() -> anyhow::Result<()> {
 
     Ok(())
 }
-
 
 #[flutter_rust_bridge::frb(init)]
 pub fn init_app() {
