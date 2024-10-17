@@ -1,4 +1,6 @@
-import 'package:smtc_windows/src/bridge_generated.dart';
+import 'rust/internal/config.dart';
+import 'rust/internal/metadata.dart';
+import 'rust/internal/timeline.dart';
 
 extension SMTCConfigCopy on SMTCConfig {
   SMTCConfig copyWith({

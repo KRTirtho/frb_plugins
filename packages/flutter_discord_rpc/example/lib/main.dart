@@ -6,7 +6,7 @@ import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDiscordRPC.initialize(
-    "<app-id>",
+    "1176718791388975124",
   );
   runApp(const MyApp());
 }
@@ -25,7 +25,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    FlutterDiscordRPC.instance.connect();
+    FlutterDiscordRPC.instance
+        .connect(autoRetry: true, retryDelay: const Duration(seconds: 10));
   }
 
   @override
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
                           start: DateTime.now().millisecondsSinceEpoch,
                           end: DateTime.now().millisecondsSinceEpoch + 1000,
                         ),
+                        activityType: ActivityType.listening,
                       ),
                     );
                   },

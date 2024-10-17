@@ -1,37 +1,44 @@
-release_tag_name = 'flutter_discord_rpc-v0.1.0+1' # generated; do not edit
+#
+# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
+# Run `pod lib lint flutter_discord_rpc.podspec` to validate before publishing.
+#
+Pod::Spec.new do |s|
+  s.name             = 'flutter_discord_rpc'
+  s.version          = '0.0.1'
+  s.summary          = 'A new Flutter FFI plugin project.'
+  s.description      = <<-DESC
+A new Flutter FFI plugin project.
+                       DESC
+  s.homepage         = 'http://example.com'
+  s.license          = { :file => '../LICENSE' }
+  s.author           = { 'Your Company' => 'email@example.com' }
 
-# We cannot distribute the XCFramework alongside the library directly,
-# so we have to fetch the correct version here.
-framework_name = 'flutter_discord_rpc-macos.xcframework'
-remote_zip_name = "#{framework_name}.zip"
-url = "https://github.com/KRTirtho/frb_plugins/releases/download/#{release_tag_name}/#{remote_zip_name}"
-local_zip_name = "#{release_tag_name}.zip"
-`
-cd Frameworks
-rm -rf #{framework_name}
+  # This will ensure the source files in Classes/ are included in the native
+  # builds of apps using this FFI plugin. Podspec does not support relative
+  # paths, so Classes contains a forwarder C file that relatively imports
+  # `../src/*` so that the C sources can be shared among all target platforms.
+  s.source           = { :path => '.' }
+  s.source_files     = 'Classes/**/*'
+  s.dependency 'FlutterMacOS'
 
-if [ ! -f #{local_zip_name} ]
-then
-  curl -L #{url} -o #{local_zip_name}
-fi
+  s.platform = :osx, '10.11'
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.swift_version = '5.0'
 
-unzip #{local_zip_name}
-cd -
-`
-
-Pod::Spec.new do |spec|
-  spec.name          = 'flutter_discord_rpc'
-  spec.version       = '0.0.1'
-  spec.license       = { :file => '../LICENSE' }
-  spec.homepage      = 'https://github.com/KRTirtho/frb_plugins'
-  spec.authors       = { 'K R Tirtho' => 'krtirtho@gmail.com' }
-  spec.summary       = 'iOS/macOS Flutter bindings for flutter_discord_rpc'
-
-  spec.source              = { :path => '.' }
-  spec.source_files        = 'Classes/**/*'
-  spec.public_header_files = 'Classes/**/*.h'
-  spec.vendored_frameworks = "Frameworks/#{framework_name}"
-
-  spec.ios.deployment_target = '11.0'
-  spec.osx.deployment_target = '10.13'
+  s.script_phase = {
+    :name => 'Build Rust library',
+    # First argument is relative path to the `rust` folder, second is name of rust library
+    :script => 'sh "$PODS_TARGET_SRCROOT/../cargokit/build_pod.sh" ../rust flutter_discord_rpc',
+    :execution_position => :before_compile,
+    :input_files => ['${BUILT_PRODUCTS_DIR}/cargokit_phony'],
+    # Let XCode know that the static library referenced in -force_load below is
+    # created by this build step.
+    :output_files => ["${BUILT_PRODUCTS_DIR}/libflutter_discord_rpc.a"],
+  }
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    # Flutter.framework does not contain a i386 slice.
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
+    'OTHER_LDFLAGS' => '-force_load ${BUILT_PRODUCTS_DIR}/libflutter_discord_rpc.a',
+  }
 end

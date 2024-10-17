@@ -1,5 +1,3 @@
-set(LibraryVersion "metadata_god-v0.5.3") # generated; do not edit
-
 # The Flutter tooling requires that developers have a version of Visual Studio
 # installed that includes CMake 3.14 or later. You should not increase this
 # version, as doing so will cause the plugin to fail to compile for some
@@ -10,29 +8,13 @@ cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME "metadata_god")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
-# Download the binaries if they are not already present.
-set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
-set(ArchivePath "${LibRoot}.tar.gz")
-if(NOT EXISTS ${ArchivePath})
-  file(DOWNLOAD
-    "https://github.com/KRTirtho/frb_plugins/releases/download/${LibraryVersion}/windows.tar.gz"
-    ${ArchivePath}
-    TLS_VERIFY ON
-  )
-endif()
-
-# Extract the binaries, overriding any already present.
-file(REMOVE_RECURSE ${LibRoot})
-file(MAKE_DIRECTORY ${LibRoot})
-execute_process(
-  COMMAND ${CMAKE_COMMAND} -E tar xzf ${ArchivePath}
-  WORKING_DIRECTORY ${LibRoot}
-)
+include("../cargokit/cmake/cargokit.cmake")
+apply_cargokit(${PROJECT_NAME} ../rust metadata_god "")
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(metadata_god_bundled_libraries
-  "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/metadata_god.dll"
+  "${${PROJECT_NAME}_cargokit_lib}"
   PARENT_SCOPE
 )

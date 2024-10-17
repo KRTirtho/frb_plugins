@@ -1,5 +1,6 @@
 PODS:
-  - flutter_discord_rpc (0.0.1)
+  - flutter_discord_rpc (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
 
 DEPENDENCIES:
@@ -13,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
 
 SPEC CHECKSUMS:
-  flutter_discord_rpc: 53b006f68ef620a99fe1b3ba7e83513f3ae95b4c
+  flutter_discord_rpc: 67a7c10ea24d9d3bf35d01af643f48fbcfa7c24f
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
 
 PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367

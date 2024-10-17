@@ -1,14 +1,6 @@
-import 'bridge_generated.dart' as bridge;
-import 'ffi.dart';
-
-bridge.MetadataGod? _api;
-
-bridge.MetadataGod get api {
-  if (_api == null) {
-    throw StateError('MetadataGod not initialized');
-  }
-  return _api!;
-}
+import 'package:metadata_god/src/rust/api/api.dart';
+import 'package:metadata_god/src/rust/api/api.dart' as api;
+import 'package:metadata_god/src/rust/frb_generated.dart';
 
 abstract class MetadataGod {
   MetadataGod._();
@@ -27,14 +19,15 @@ abstract class MetadataGod {
   ///  runApp(MyApp());
   /// }
   /// ```
-  static void initialize() {
-    _api ??= initializeDynamicLibrary();
+  static Future<void> initialize() async {
+    await RustLib.init();
+    await RustLib.instance.executeRustInitializers();
   }
 
   /// Read metadata from a mp3, m4a, ogg & flac file
   ///
   /// The path to file must exists otherwise will throw [Exception]
-  static Future<bridge.Metadata> readMetadata({required String file}) {
+  static Future<Metadata> readMetadata({required String file}) {
     return api.readMetadata(file: file);
   }
 
@@ -68,13 +61,13 @@ abstract class MetadataGod {
   /// ```
   static Future<void> writeMetadata({
     required String file,
-    required bridge.Metadata metadata,
+    required Metadata metadata,
   }) {
     return api.writeMetadata(file: file, metadata: metadata);
   }
 }
 
-extension MetadataDuration on bridge.Metadata {
+extension MetadataDuration on Metadata {
   Duration? get duration =>
       durationMs == null ? null : Duration(milliseconds: durationMs!.floor());
 }

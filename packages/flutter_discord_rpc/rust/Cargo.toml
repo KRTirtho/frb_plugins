@@ -1,0 +1,13 @@
+[package]
+name = "flutter_discord_rpc"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+anyhow = "1.0.89"
+discord-rich-presence = { git = "https://github.com/vionya/discord-rich-presence.git" }
+flutter_rust_bridge = "=2.5.0"
+lazy_static = "1.5.0"

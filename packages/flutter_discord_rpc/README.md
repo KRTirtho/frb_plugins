@@ -10,6 +10,13 @@ Run the following:
 > flutter pub add flutter_discord_rpc
 ```
 
+## Requirements
+- Make sure [`rustup`](https://rustup.rs) is installed.
+
+### Support this project
+
+<a href="https://www.buymeacoffee.com/krtirtho"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=krtirtho&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+
 ### Usage
 
 First, create discord application from https://discord.com/developers/applications. After that, you will get an application id. Use that application id in place of `<app-id>` in the below code.

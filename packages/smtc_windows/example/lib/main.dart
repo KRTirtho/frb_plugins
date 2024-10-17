@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:smtc_windows/smtc_windows.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SMTCWindows.initialize();
   runApp(const MyApp());
 }
 
@@ -40,10 +43,10 @@ class _MyAppState extends State<MyApp> {
         smtc.buttonPressStream.listen((event) {
           switch (event) {
             case PressedButton.play:
-              smtc.setPlaybackStatus(PlaybackStatus.Playing);
+              smtc.setPlaybackStatus(PlaybackStatus.playing);
               break;
             case PressedButton.pause:
-              smtc.setPlaybackStatus(PlaybackStatus.Paused);
+              smtc.setPlaybackStatus(PlaybackStatus.paused);
               break;
             case PressedButton.next:
               print('Next');
@@ -52,7 +55,7 @@ class _MyAppState extends State<MyApp> {
               print('Previous');
               break;
             case PressedButton.stop:
-              smtc.setPlaybackStatus(PlaybackStatus.Stopped);
+              smtc.setPlaybackStatus(PlaybackStatus.stopped);
               smtc.disableSmtc();
               break;
             default:

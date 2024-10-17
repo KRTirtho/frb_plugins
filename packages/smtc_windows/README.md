@@ -12,17 +12,30 @@ Add `smtc_windows` as a dependency in your pubspec.yaml file.
 flutter pub add smtc_windows
 ```
 
-### Support Development
+## Requirements
+- Make sure [`rustup`](https://rustup.rs) is installed.
 
-<a href="https://www.buymeacoffee.com/krtirtho">
-<img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=krtirtho&button_colour=FF5F5F&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00" />
-</a>
-<br/>
-<a href="https://patreon.com/krtirtho"><img src="https://user-images.githubusercontent.com/61944859/180249027-678b01b8-c336-451e-b147-6d84a5b9d0e7.png" width="250"/></a>
+### Support this project
+
+<a href="https://www.buymeacoffee.com/krtirtho"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=krtirtho&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 ### Usage
 
 ```dart
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SMTCWindows.initialize();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
 class _MyAppState extends State<MyApp> {
   late SMTCWindows smtc;
 
