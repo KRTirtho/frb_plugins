@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-10-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`metadata_god` - `v1.0.0`](#metadata_god---v100)
+
+---
+
+#### `metadata_god` - `v1.0.0`
+
+ - **REFACTOR**(metadata_god): migrate to frb 2.1.0 and cargokit based non-binary distribution.
+ - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.
+ - **FEAT**(flutter_discord_rpc): add complete support.
+ - **DOCS**: add support url.
+ - **DOCS**: update readme with rustup requirement.
+
+
 ## 2024-07-14
 
 ### Changes
