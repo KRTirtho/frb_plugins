@@ -3,6 +3,10 @@ name: frb_plugins
 packages:
   - packages/**
 
+ignore:
+  - "packages/**/build_tool"
+  - "packages/**/build_tool_runner"
+
 scripts:
   version:
     exec: echo "use 'dart cli/main.dart version <version> -p <package_name>' to update version"
