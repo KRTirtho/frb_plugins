@@ -15,6 +15,33 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`smtc_windows` - `v1.0.0`](#smtc_windows---v100)
+
+---
+
+#### `smtc_windows` - `v1.0.0`
+
+ - **REFACTOR**(smtc_windows): migrate to frb 2.1.0 and cargokit base.
+ - **FIX**(flutter_discord_rpc): not working for snap/flatpak discord in linux.
+ - **FEAT**(flutter_discord_rpc): add complete support.
+ - **DOCS**: add support url.
+ - **DOCS**: update readme with rustup requirement.
+
+**BREAKING CHANGE!** 
+ - Upgraded to flutter_rust_bridge v2 which requires `rustup` to be installed.
+
+## 2024-10-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`flutter_discord_rpc` - `v1.0.0`](#flutter_discord_rpc---v100)
 
 ---
