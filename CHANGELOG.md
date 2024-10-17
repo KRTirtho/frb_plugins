@@ -15,6 +15,32 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`flutter_discord_rpc` - `v1.0.0`](#flutter_discord_rpc---v100)
+
+---
+
+#### `flutter_discord_rpc` - `v1.0.0`
+
+ - **REFACTOR**(flutter_discord_rpc): migrate to cargokit base and frb 2.1.0.
+ - **FEAT**(flutter_discord_rpc): add support for activity_type in discord rich presence (#1).
+ - **DOCS**: add support url.
+ - **DOCS**: update readme with rustup requirement.
+
+**BREAKING CHANGE!** 
+ - Upgraded to flutter_rust_bridge v2 which requires `rustup` to be installed.
+
+## 2024-10-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`metadata_god` - `v1.0.0`](#metadata_god---v100)
 
 ---
