@@ -1,3 +1,10 @@
+## 1.0.0
+
+ - **REFACTOR**(flutter_discord_rpc): migrate to cargokit base and frb 2.1.0.
+ - **FEAT**(flutter_discord_rpc): add support for activity_type in discord rich presence (#1).
+ - **DOCS**: add support url.
+ - **DOCS**: update readme with rustup requirement.
+
 ## 0.1.0+1
 
  - **DOCS**: add flutter_discord_rpc readme.
