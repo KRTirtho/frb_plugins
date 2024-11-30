@@ -86,8 +86,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-// Get metadata from file
-Metadata metadata = await MetadataGod.getMetadata("/path/to/audio-file");
+// read metadata from file
+Metadata metadata = await MetadataGod.readMetadata("/path/to/audio-file");
 
 // Set metadata to file
 await MetadataGod.writeMetadata(
