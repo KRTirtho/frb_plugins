@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   ffi: ^2.0.1
-  flutter_rust_bridge: 2.5.0
+  flutter_rust_bridge: 2.7.0
   plugin_platform_interface: ^2.0.2
   meta: ^1.11.0
   uuid: ^4.4.0
