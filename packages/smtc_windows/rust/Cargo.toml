@@ -13,3 +13,6 @@ anyhow = '1'
 [dependencies.windows]
 version = '0.58.*'
 features = ['Media', 'Media_Playback', 'Foundation', 'Storage_Streams']
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(frb_expand)'] }
