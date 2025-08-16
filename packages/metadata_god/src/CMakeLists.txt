@@ -15,3 +15,8 @@ set_target_properties(metadata_god PROPERTIES
 )
 
 target_compile_definitions(metadata_god PUBLIC DART_SHARED_LIB)
+
+if (ANDROID)
+  # Support Android 15 16k page size.
+  target_link_options(metadata_god PRIVATE "-Wl,-z,max-page-size=16384")
+endif()
