@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:smtc_windows/src/enums/button_event.dart';
 import 'package:smtc_windows/src/enums/repeat_mode.dart';
 import 'package:smtc_windows/src/extensions.dart';
@@ -13,7 +10,6 @@ import 'rust/internal/timeline.dart';
 import 'rust/api/api.dart';
 import 'rust/api/api.dart' as api;
 
-final _isWindows = kIsWeb ? false : Platform.isWindows;
 
 class SMTCWindows {
   //! Unsafe shared pointer to the underlying Rust struct.
