@@ -1,6 +1,6 @@
 name: flutter_discord_rpc
 description: Discord RPC support for Flutter desktop platforms
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/KRTirtho/frb_plugins/tree/main/packages/flutter_discord_rpc
 
 environment:

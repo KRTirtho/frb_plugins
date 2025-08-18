@@ -1,3 +1,8 @@
+## 1.1.0
+
+ - **FEAT**(flutter_discord_rpc): update flutter_rust_bridge and cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
 ## 1.0.0
 
  - **REFACTOR**(flutter_discord_rpc): migrate to cargokit base and frb 2.1.0.

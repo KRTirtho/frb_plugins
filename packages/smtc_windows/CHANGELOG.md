@@ -1,3 +1,8 @@
+## 1.1.0
+
+ - **FEAT**(smtc_windows): update flutter_rust_bridge and cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
 ## 1.0.0
 
  - **REFACTOR**(smtc_windows): migrate to frb 2.1.0 and cargokit base.

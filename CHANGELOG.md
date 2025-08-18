@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-08-18
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_discord_rpc` - `v1.1.0`](#flutter_discord_rpc---v110)
+ - [`metadata_god` - `v1.1.0`](#metadata_god---v110)
+ - [`smtc_windows` - `v1.1.0`](#smtc_windows---v110)
+
+---
+
+#### `flutter_discord_rpc` - `v1.1.0`
+
+ - **FEAT**(flutter_discord_rpc): update flutter_rust_bridge and cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
+#### `metadata_god` - `v1.1.0`
+
+ - **FEAT**(metadata_god): upgrade cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
+#### `smtc_windows` - `v1.1.0`
+
+ - **FEAT**(smtc_windows): update flutter_rust_bridge and cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
+
 ## 2024-10-17
 
 ### Changes

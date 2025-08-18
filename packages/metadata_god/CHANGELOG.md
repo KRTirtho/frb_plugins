@@ -1,3 +1,8 @@
+## 1.1.0
+
+ - **FEAT**(metadata_god): upgrade cargokit.
+ - **FEAT**(metadata_god): upgrade flutter_rust_bridge and other dependencies.
+
 ## 1.0.0
 
  - **REFACTOR**(metadata_god): migrate to frb 2.1.0 and cargokit based non-binary distribution.
