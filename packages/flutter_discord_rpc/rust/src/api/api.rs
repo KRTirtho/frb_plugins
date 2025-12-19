@@ -15,11 +15,11 @@ lazy_static! {
 
 pub fn discord_init(client_id: String) -> anyhow::Result<()> {
     let mut client = DISCORD_CLIENT.lock().unwrap();
-    *client = Some(Box::new(
-        DiscordIpcClient::new(client_id.as_str())
-            .map_err(|_| anyhow::anyhow!("Failed to create IPC client"))?,
-    ));
 
+    // new() no longer returns Result
+    let ipc = DiscordIpcClient::new(client_id.as_str());
+
+    *client = Some(Box::new(ipc));
     Ok(())
 }
 

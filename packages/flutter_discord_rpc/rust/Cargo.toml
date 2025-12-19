@@ -1,3 +1,6 @@
+[workspace]
+resolver = "2"
+
 [package]
 name = "flutter_discord_rpc"
 version = "0.1.0"
@@ -7,7 +10,10 @@ edition = "2021"
 crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
-anyhow = "1"
-discord-rich-presence = { git = "https://github.com/vionya/discord-rich-presence.git" }
+anyhow = "1.0.89"
+discord-rich-presence = "1.0.0"
 flutter_rust_bridge = "=2.11.1"
 lazy_static = "1.5.0"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(frb_expand)'] }
