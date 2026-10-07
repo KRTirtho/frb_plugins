@@ -8,7 +8,9 @@ use windows::{
         SystemMediaTransportControlsButtonPressedEventArgs,
         SystemMediaTransportControlsTimelineProperties,
     },
-    Storage::Streams::RandomAccessStreamReference,
+    Storage::{
+        StorageFile, Streams::RandomAccessStreamReference,
+    },
 };
 
 use super::{
@@ -70,7 +72,14 @@ impl SMTCInternal {
 
         let thumbnail = &metadata.h_thumbnail().map(|s| {
             let uri = Foundation::Uri::CreateUri(&s).unwrap();
-            RandomAccessStreamReference::CreateFromUri(&uri).unwrap()
+            // Use CreateFromUri for http/https/ms-appdata/ms-appx schemas.
+            if uri.SchemeName().unwrap() != "file" {
+                return RandomAccessStreamReference::CreateFromUri(&uri).unwrap()
+            }
+            // Use CreateFromFile for file schema.
+            let fileFuture = StorageFile::GetFileFromPathAsync(&s).unwrap();
+            let file = fileFuture.join().unwrap();
+            RandomAccessStreamReference::CreateFromFile(&file).unwrap()
         });
 
         if let Some(thumbnail) = thumbnail {

@@ -1,6 +1,3 @@
-/// This is copied from Cargokit (which is the official way to use it currently)
-/// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
-
 import 'dart:io';
 
 extension on String {
@@ -46,6 +43,8 @@ class Environment {
   static List<String> get targetPlatforms =>
       _getEnv("CARGOKIT_TARGET_PLATFORMS").split(',');
 
+  static String? get ohosSdkHome => _getEnvOptional("CARGOKIT_OHOS_SDK_HOME");
+
   // CMAKE
   static String get targetPlatform => _getEnv("CARGOKIT_TARGET_PLATFORM");
 
@@ -64,5 +63,9 @@ class Environment {
     } else {
       return res;
     }
+  }
+
+  static String? _getEnvOptional(String key) {
+    return Platform.environment[key];
   }
 }

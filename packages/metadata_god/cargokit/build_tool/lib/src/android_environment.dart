@@ -1,6 +1,3 @@
-/// This is copied from Cargokit (which is the official way to use it currently)
-/// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
-
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math' as math;
@@ -189,7 +186,16 @@ class AndroidEnvironment {
     if (rustFlags.isNotEmpty) {
       rustFlags = '$rustFlags\x1f';
     }
-    rustFlags = '$rustFlags-L\x1f$workaroundDir';
+    if (["arm64-v8a", "x86_64"].contains(target.android)) {
+      rustFlags = '$rustFlags-L\x1f$workaroundDir\x1f';
+
+      const pageSizeArgs = ["-C", "link-arg=-Wl,--hash-style=both", "-C", "link-arg=-Wl,-z,max-page-size=16384"];
+      final pageSizeArgsString = pageSizeArgs.join("\x1f");
+
+      rustFlags = '$rustFlags$pageSizeArgsString';
+    } else {
+      rustFlags = '$rustFlags-L\x1f$workaroundDir';
+    }
     return rustFlags;
   }
 }

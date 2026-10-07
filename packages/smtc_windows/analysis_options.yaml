@@ -5,3 +5,5 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - lib/src/rust/frb_generated.web.dart
+    - build/**
+    - windows/**
